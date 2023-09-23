@@ -25,13 +25,15 @@ echo [*] Setting "%VIRTUAL_ENV%" as active environment.
 Call "%VIRTUAL_ENV%\Scripts\activate.bat"
 
 if %ERRORLEVEL% NEQ 0 (
-    echo [-] An issue activating  packages has occurred.
+    echo [-] An issue activating environment has occurred.
     echo [-] Unable to finish setup.
     Exit /B 1
 )
 
 echo [*] Installing packages...
-Call pip install openllm & pip install "openllm[llama]"
+Set NUM_PACKAGES = 0
+
+@REM Call pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117 & pip install openllm & pip install "openllm[llama]"
 
 if %ERRORLEVEL% NEQ 0 (
     echo [-] An issue installing packages has occurred.
@@ -39,5 +41,4 @@ if %ERRORLEVEL% NEQ 0 (
     Exit /B 1
 )
 
-echo [+] Packages Installed successfully.
-echo [*] Use "%VIRTUAL_ENV%/Scripts/openllm -v" to check version information
+echo [+] %NUM_PACKAGES% Packages Installed successfully.
