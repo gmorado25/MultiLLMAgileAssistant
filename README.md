@@ -1,20 +1,67 @@
-# Multi-LLM Agile Assistant
-## SE4485 Software Engineering Project
+# Multi-LLM Agile Assistant - SE4485 Software Engineering Project
 
-The Multi-LLM Agile Assistant is a program designed to assist software teams with the 
-production of draft deliverables during the software development lifecycle (SDLC). This
-project runs as a web application that connects to a backend prompt library and LLM server(s).
+The Multi-LLM Agile Assistant is a program designed to assist software teams 
+with the production of draft deliverables during the software development 
+lifecycle (SDLC). This project runs as a web application that connects to
+backend prompt library and LLM server(s).
 
-### Environment Setup
+The instructions for setting up the development environment for the project 
+are listed below. Users looking to install and run the application can 
+download the web server and client code [here]().
+
+## Build Requirements
+
+Building the project requires 2 setups for the individual backend and frontend
+applications. The requirements for each are discussed below.
+
+### Backend/Server Requirements
+
+The backend project requires at minimum python version 3.6 and can be verified
+with the command:
+
+```
+python -V
+```
+
+Remaining backend dependencies are installed with the setup script discussed
+in the Environment Setup [section](#environment-setup)
+
+### Frontend/Client Requirements
+
+Building the frontend code requires NodeJS and Node Package Manager. This can
+be verified with the command:
+
+```
+node --version
+```
+
+Remaining frontend dependencies are installed with the setup script discussed
+in the Environment Setup [section](#environment-setup)
+
+## Environment Setup
+
 Development setup is streamlined with the help of several shell scripts. Anyone starting
 with a new clone of the project should run 'setup.bat' or 'setup.sh' relevant to their
 workstation operating system.
 
-'''
-./setup.bat
-'''
+<details>
+<summary>Windows</summary>
 
-This command will setup a virtual environment for the project packages and download and
-install all of the neccessary python packages.
+```
+.\setup.bat
+```
+</details>
+
+<details>
+<summary>Linux</summary>
+
+```
+./setup.sh
+```
+</details>
+<br>
+This script will setup a virtual environment for the server and download and
+install all of the neccessary python packages, as well as setup the React 
+project for the fontend and install its dependencies.
 
 --- TO BE CONT. ---
