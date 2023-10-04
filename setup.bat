@@ -47,10 +47,12 @@ if %ERRORLEVEL% NEQ 0 (
 echo [+] Packages Installed successfully.
 echo [+] Server files installed. & echo:
 
+echo [+] Finished server project setup...
+
 cd ../client
 
 echo [*] Setting up client app...
 
-@REM Put front end and React setup here...
+@REM Put setup for front end and React setup here...
 echo [+] Packages Installed successfully.
 echo [+] Client files installed.
