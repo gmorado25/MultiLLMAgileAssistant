@@ -63,5 +63,15 @@ workstation operating system.
 This script will setup a virtual environment for the server and download and
 install all of the neccessary python packages, as well as setup the React 
 project for the fontend and install its dependencies.
+<br>
 
---- TO BE CONT. ---
+## Starting the Server
+
+Starting the server is simple once dependencies are in place. Open a terminal, navigate to the django project root (./server/multillm), and run
+```
+python manage.py runserver
+```
+
+Open the project in your web browser at the local address specificed in the command's output to verify it is running.
+
+-- TO BE CONT. --
