@@ -1,3 +1,6 @@
+# !!!!! SECURITY - IMPORTANT !!!!! ignore directory to store auth keys and credentials
+server/credentials
+
 # Environment directories
 server/.project_env
 .vscode

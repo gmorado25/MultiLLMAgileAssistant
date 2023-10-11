@@ -36,7 +36,7 @@ fi
 echo [*] Installing packages...
 
 # This brings in these 2 modules and all their dependencies
-pip install django & pip install langchain[llms] & pip install google-cloud-aiplatform
+pip install django & pip install langchain[llms] & pip install google-cloud-aiplatform & pip install anthropic
 
 if [ $? -ne 0 ]; then
     echo [-] An issue installing packages has occurred.
