@@ -36,7 +36,7 @@ if %ERRORLEVEL% NEQ 0 (
 echo [*] Installing packages...
 
 @Rem This brings in these 2 modules and all their dependencies
-Call pip install django & pip install langchain[llms]
+Call pip install django & pip install langchain[llms] & pip install google-cloud-aiplatform
 
 if %ERRORLEVEL% NEQ 0 (
     echo [-] An issue installing packages has occurred.
