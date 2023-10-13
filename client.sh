@@ -1,2 +1,2 @@
 cd client
-npm start
+npm run dev

@@ -91,6 +91,14 @@ Open the project in your web browser at the local address specificed in the comm
 
 ## Starting the Cleint
 
+Starting the client is simple once dependencies are in place. Open a terminal, navigate to the react project root (./client), and run
+
+```
+npm run dev
+```
+
+Alternative way:
+
 ```
 bash client.sh
 ```
