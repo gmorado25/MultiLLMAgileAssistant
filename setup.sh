@@ -8,12 +8,12 @@ cd server
 
 echo -e "[*] Checking for Virtual Environment.\n"
 
-if [ ! -f "${VIRTUAL_ENV}/Scripts/activate" ]; then
+if [ ! -f "${VIRTUAL_ENV}/bin/activate" ]; then
     echo "[*] Virtual Environment not found, setting up project environment..."
     pip install virtualenv
-    python -m venv ${VIRTUAL_ENV}
+    python3 -m venv ${VIRTUAL_ENV}
 
-    if [ ! -f "${VIRTUAL_ENV}/Scripts/activate" ]; then
+    if [ ! -f "${VIRTUAL_ENV}/bin/activate" ]; then
         echo [-] An issue with environment setup occurred.
         echo [-] Unable to setup Virtual Environment.
         exit 1
@@ -25,7 +25,7 @@ else
 fi
 
 echo [*] Setting ${VIRTUAL_ENV} as active environment.
-source ${VIRTUAL_ENV}/Scripts/activate
+source ${VIRTUAL_ENV}/bin/activate
 
 if [ $? -ne 0 ]; then
     echo [-] An issue activating environment has occurred.
@@ -54,5 +54,6 @@ cd ../client
 echo [*] Setting up client app...
 
 # Put setup for front end and React setup here...
+npm install
 echo [+] Packages Installed successfully.
 echo [+] Client files installed.
