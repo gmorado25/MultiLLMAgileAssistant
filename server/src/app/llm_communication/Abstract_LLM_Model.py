@@ -15,7 +15,7 @@ class Endpoint:
     ----------------------------------------------------------------------- """ 
     def _setupChain(self, prompt: str, dataset: str) -> LLMChain:
         if (self._model is None):
-            return "Error: No LLM defined.\n"
+            raise Exception(f"Error: No endpoint defined in attribute '_model' for {self}.\n")
         
         input = ChatPromptTemplate.from_messages([
             ("system", prompt),

@@ -1,5 +1,5 @@
 from langchain.chat_models import ChatOpenAI
-from server.multillm.llm_communication import Abstract_LLM_Model
+from . import Abstract_LLM_Model
 
 class GPT_3_5(Abstract_LLM_Model.Endpoint):
 
