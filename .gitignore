@@ -9,3 +9,6 @@ testing/*
 # Byte-compiled / optimized / DLL files
 **/__pycache__
 *.py[cod]
+
+# Database specific files
+server/src/db.sqlite3
