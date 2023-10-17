@@ -19,6 +19,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('')),
+    #path('', include('')) -- empty module breaks server
 ]
 
