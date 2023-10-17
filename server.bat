@@ -1,4 +1,4 @@
 cd server
 Call .project_env/Scripts/activate
-cd multillm
+cd src
 python manage.py runserver

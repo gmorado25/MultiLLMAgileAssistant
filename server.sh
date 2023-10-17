@@ -1,4 +1,4 @@
 cd server
 source .project_env/bin/activate
-cd multillm
+cd src
 python manage.py runserver
