@@ -58,3 +58,5 @@ source npm install
 npm install
 echo [+] Packages Installed successfully.
 echo [+] Client files installed.
+npm install @mui/joy @emotion/react @emotion/styled
+npm install @mui/material @emotion/react @emotion/styled

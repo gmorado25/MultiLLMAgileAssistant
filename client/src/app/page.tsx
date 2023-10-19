@@ -2,6 +2,8 @@ import Image from "next/image";
 import { NextPage } from "next";
 import { Footer } from "./components/layouts/footer";
 import Link from "next/link";
+import OutputBlock from "./components/llm_output/outputBlock";
+import './styles.css'; // Import the CSS file
 
 const Home: NextPage = () => {
   return (
@@ -108,6 +110,11 @@ const Home: NextPage = () => {
               </li>
             </div>
           </div>
+        </div>
+        <div className="Outputs">
+              <OutputBlock llm="Chat GBT" output="test1"></OutputBlock>
+              <OutputBlock llm="Bart" output="test2"></OutputBlock>
+              <OutputBlock llm="Lama" output="test3"></OutputBlock>
         </div>
       </div>
       <Footer></Footer>
