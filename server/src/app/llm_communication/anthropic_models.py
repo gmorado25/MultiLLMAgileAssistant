@@ -1,7 +1,7 @@
 from langchain.chat_models import ChatAnthropic
-from . import Abstract_LLM_Model
+from .abstract_model import AbstractModel
 
-class Claude2(Abstract_LLM_Model.Endpoint):
+class Claude2(AbstractModel):
 
         def __init__(self) -> None:
             super().__init__(ChatAnthropic(model_name="claude-2"))

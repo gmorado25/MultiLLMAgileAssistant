@@ -1,7 +1,7 @@
 from langchain.llms.fake import FakeListLLM
-from . import Abstract_LLM_Model
+from .abstract_model import AbstractModel
 
-class MockInputModel(Abstract_LLM_Model.Endpoint):
+class MockInputModel(AbstractModel):
 
     def __init__(self) -> None:
         super().__init__(None)
@@ -19,8 +19,9 @@ class MockInputModel(Abstract_LLM_Model.Endpoint):
         Returns a mock response from the query.
     ----------------------------------------------------------------------- """ 
     def query(self, prompt: str, dataset: str) -> str:
-        response = f"Response for mock llm model {self}:\n\n" + "[SYSTEM PROMPT]: \"" \
-            + prompt + "\"\n[DATASET]: \"" + dataset + "\""
+        response = f"[*] Mock model invoked {self}\n" \
+            + "[*] System Prompt: \"" + prompt + "\"\n[*] Dataset: \"" \
+            + dataset + "\""
         
         self._model = FakeListLLM(responses=[response])
         return super().query(prompt, dataset)

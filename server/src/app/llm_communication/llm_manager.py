@@ -1,9 +1,10 @@
 import json, os
 from io import TextIOWrapper
 from typing import Type
-from . import Abstract_LLM_Model
+from .abstract_model import AbstractModel
+from .llm_response import LLMResponse
 
-_instances: dict[str, Abstract_LLM_Model.Endpoint] = {}
+_instances: dict[str, AbstractModel] = {}
 
 """ -----------------------------------------------------------------------
 Summary:
@@ -53,7 +54,7 @@ def _setupAuthentication() -> None:
             " the environment variable 'PATH_AUTH_KEYS'" + \
             " points to the location of the file storing" + \
             " authentication variables."
-        raise Exception(msg)
+        print(msg)
 
 """ -----------------------------------------------------------------------
 Summary:
@@ -64,7 +65,7 @@ Summary:
 Returns:
     N/A
 ----------------------------------------------------------------------- """ 
-def _setupModels(models: dict[str, Type[Abstract_LLM_Model.Endpoint]]) -> None:
+def _setupModels(models: dict[str, Type[AbstractModel]]) -> None:
     for name, model in models.items():
         try:
             _instances[name] = model()
@@ -81,7 +82,7 @@ Summary:
 Returns:
     N/A
 ----------------------------------------------------------------------- """ 
-def init(models: dict[str, Type[Abstract_LLM_Model.Endpoint]]) -> None:
+def init(models: dict[str, Type[AbstractModel]]) -> None:
     if (len(_instances) == 0):
         _setupAuthentication()
         _setupModels(models)
@@ -89,7 +90,7 @@ def init(models: dict[str, Type[Abstract_LLM_Model.Endpoint]]) -> None:
 """ -----------------------------------------------------------------------
 Summary:
     Queries the requested llms with the given system prompt and dataset.
-    Errors will be returned as the response for that model.
+    Errors will be returned as the result for that model.
 
 Parameters:
     prompt - the system prompt to give to the LLM.
@@ -97,16 +98,20 @@ Parameters:
     models - a list of the names of the models to be queried.
 
 Returns:
-    Returns a dictionary mapping the name of the LLM with its recieved
-    response parsed as a string.
+    Returns an LLMResponse array containing query responses from each of 
+    the requested LLMs.
 ----------------------------------------------------------------------- """ 
-def query(prompt: str, dataset: str, models: list[str]) -> dict[str, str]:
-    responses: dict[str, str] = {}
+def query(prompt: str, dataset: str, models: list[str]) -> LLMResponse:
+    responses: list[LLMResponse] = []
     for model in models:
         try:
             llm = _instances.get(model)
-            responses[model] = llm.query(prompt, dataset)
+            output = llm.query(prompt, dataset)
+            result = LLMResponse(model, output)
+            responses.append(result)
         except Exception as error:
-            responses[model] = error
+            print(f"Error in LLM {model}:", error)
+            result = LLMResponse(model, "An error has occured.")
+            responses.append(result)
 
     return responses

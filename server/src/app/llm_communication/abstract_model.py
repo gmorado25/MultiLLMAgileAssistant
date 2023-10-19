@@ -3,7 +3,7 @@ from langchain.chains import LLMChain
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 
-class Endpoint:
+class AbstractModel:
 
     """ -----------------------------------------------------------------------
     Summary:
@@ -49,8 +49,4 @@ class Endpoint:
     ----------------------------------------------------------------------- """ 
     def query(self, prompt: str, dataset: str) -> str:
         llm_chain = self._setupChain(prompt, dataset)
-
-        try:
-            return llm_chain.invoke({})
-        except Exception as error:
-            return error
+        return llm_chain.invoke({})
