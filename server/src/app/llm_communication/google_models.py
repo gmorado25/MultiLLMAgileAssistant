@@ -1,7 +1,7 @@
 from langchain.chat_models import ChatVertexAI
-from server.multillm.llm_communication import Abstract_LLM_Model
+from .abstract_model import AbstractModel
 
-class ChatBison(Abstract_LLM_Model.Endpoint):
+class ChatBison(AbstractModel):
 
         def __init__(self) -> None:
             super().__init__(ChatVertexAI(model_name="chat-bison"))

@@ -1,9 +1,10 @@
+import json, os
 from io import TextIOWrapper
-import json
-import os
-from server.multillm.llm_communication import Abstract_LLM_Model, OpenAIModels, GoogleModels, AnthropicModels, TestModel
+from typing import Type
+from .abstract_model import AbstractModel
+from .llm_response import LLMResponse
 
-_models: dict[str, Abstract_LLM_Model.Endpoint] = {}
+_instances: dict[str, AbstractModel] = {}
 
 """ -----------------------------------------------------------------------
 Summary:
@@ -44,11 +45,16 @@ Returns:
 ----------------------------------------------------------------------- """ 
 def _setupAuthentication() -> None:
     try:
-        with open(os.environ["PATH_AUTH_KEYS"], "r") as credentialsFile:
+        path = os.environ["PATH_AUTH_KEYS"]
+        with open(path, "r") as credentialsFile:
             _readAuthFile(credentialsFile)
-    except Exception as error:
-        print("Invalid credentials path. Please check the environment variable 'PATH_AUTH_KEYS' points to the location of the file storing authentication variables.", error)
-        credentialsFile.close()
+    except Exception as e:
+        err = e.__str__()
+        msg = f"Invalid credentials path -> {e}.\nPlease check" + \
+            " the environment variable 'PATH_AUTH_KEYS'" + \
+            " points to the location of the file storing" + \
+            " authentication variables."
+        print(msg)
 
 """ -----------------------------------------------------------------------
 Summary:
@@ -59,27 +65,32 @@ Summary:
 Returns:
     N/A
 ----------------------------------------------------------------------- """ 
-def _setupModels() -> None:
-
-    models = {
-        "GPT3.5": OpenAIModels.GPT_3_5,
-        "GPT4": OpenAIModels.GPT4,
-        "Bard": GoogleModels.ChatBison,
-        "Claude": AnthropicModels.Claude2
-    }
-
+def _setupModels(models: dict[str, Type[AbstractModel]]) -> None:
     for name, model in models.items():
         try:
-            _models[name] = model()
+            _instances[name] = model()
         except Exception as error:
-            print(f"Error setting up LLM module {name}:", error)
+            print(f"Cannot set up LLM module {name}:", error)
 
-    _models["Test"] = TestModel.MockInputModel("The answer is banana")
+
+""" -----------------------------------------------------------------------
+Summary:
+    Initializes each instance of the llm endpoints and sets up
+    authorization from configuration. Must be called before the first time
+    a service is queried.
+
+Returns:
+    N/A
+----------------------------------------------------------------------- """ 
+def init(models: dict[str, Type[AbstractModel]]) -> None:
+    if (len(_instances) == 0):
+        _setupAuthentication()
+        _setupModels(models)
 
 """ -----------------------------------------------------------------------
 Summary:
     Queries the requested llms with the given system prompt and dataset.
-    Errors will be returned as the response for that model.
+    Errors will be returned as the result for that model.
 
 Parameters:
     prompt - the system prompt to give to the LLM.
@@ -87,20 +98,20 @@ Parameters:
     models - a list of the names of the models to be queried.
 
 Returns:
-    Returns a dictionary mapping the name of the LLM with its recieved
-    response parsed as a string.
+    Returns an LLMResponse array containing query responses from each of 
+    the requested LLMs.
 ----------------------------------------------------------------------- """ 
-def query(prompt: str, dataset: str, models: list[str]) -> dict[str, str]:
-    if (len(_models) == 0):
-        _setupAuthentication()
-        _setupModels()
-
-    responses: dict[str, str] = {}
+def query(prompt: str, dataset: str, models: list[str]) -> LLMResponse:
+    responses: list[LLMResponse] = []
     for model in models:
         try:
-            llm = _models.get(model)
-            responses[model] = llm.query(prompt, dataset)
+            llm = _instances.get(model)
+            output = llm.query(prompt, dataset)
+            result = LLMResponse(model, output)
+            responses.append(result)
         except Exception as error:
-            responses[model] = error
+            print(f"Error in LLM {model}:", error)
+            result = LLMResponse(model, "An error has occured.")
+            responses.append(result)
 
     return responses

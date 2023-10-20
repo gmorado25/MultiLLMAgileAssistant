@@ -1,5 +1,5 @@
 cd server
-source .project_env/bin/activate
+Call .project_env/Scripts/activate
 cd src
 python manage.py makemigrations app
 python manage.py migrate

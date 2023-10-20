@@ -3,7 +3,7 @@ from langchain.chains import LLMChain
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 
-class Endpoint:
+class AbstractModel:
 
     """ -----------------------------------------------------------------------
     Summary:
@@ -15,7 +15,7 @@ class Endpoint:
     ----------------------------------------------------------------------- """ 
     def _setupChain(self, prompt: str, dataset: str) -> LLMChain:
         if (self._model is None):
-            return "Error: No LLM defined.\n"
+            raise Exception(f"Error: No endpoint defined in attribute '_model' for {self}.\n")
         
         input = ChatPromptTemplate.from_messages([
             ("system", prompt),
@@ -49,8 +49,4 @@ class Endpoint:
     ----------------------------------------------------------------------- """ 
     def query(self, prompt: str, dataset: str) -> str:
         llm_chain = self._setupChain(prompt, dataset)
-
-        try:
-            return llm_chain.invoke({})
-        except Exception as error:
-            return error
+        return llm_chain.invoke({})

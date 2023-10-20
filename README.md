@@ -57,16 +57,14 @@ workstation operating system.
 <summary>Linux</summary>
 
 ```
-bash setup.sh
-```
-
-Alternative way:
-
-```
- bash setup.sh
+./setup.sh
 ```
 
 </details>
+<summary>MacOS</summary>
+bash setup.sh
+</details>
+
 <br>
 This script will setup a virtual environment for the server and download and
 install all of the neccessary python packages, as well as setup the React 
@@ -81,7 +79,7 @@ Starting the server is simple once dependencies are in place. Open a terminal, n
 python manage.py runserver
 ```
 
-Alternative way:
+Alternatively, run the automatic script:
 
 ```
 bash server.sh

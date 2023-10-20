@@ -1,10 +1,15 @@
 # !!!!! SECURITY - IMPORTANT !!!!! ignore directory to store auth keys and credentials
-server/credentials
+server/credentials/*
+!server/credentials/mock-config.json
 
 # Environment directories
 server/.project_env
 .vscode
+testing/*
 
 # Byte-compiled / optimized / DLL files
 **/__pycache__
 *.py[cod]
+
+# Database specific files
+server/src/db.sqlite3

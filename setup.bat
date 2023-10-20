@@ -36,7 +36,7 @@ if %ERRORLEVEL% NEQ 0 (
 echo [*] Installing packages...
 
 @Rem This brings in these 2 modules and all their dependencies
-Call pip install django & pip install langchain[llms] & pip install google-cloud-aiplatform & pip install anthropic
+Call pip install django & pip install djangorestframework & pip install langchain[llms] & pip install google-cloud-aiplatform & pip install anthropic
 
 if %ERRORLEVEL% NEQ 0 (
     echo [-] An issue installing packages has occurred.
@@ -52,6 +52,7 @@ echo [+] Finished server project setup...
 cd ../client
 
 echo [*] Setting up client app...
+Call "npm install"
 
 @REM Put setup for front end and React setup here...
 echo [+] Packages Installed successfully.
