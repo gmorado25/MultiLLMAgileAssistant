@@ -11,6 +11,7 @@ from django.db import models
 
 class Prompt(models.Model):
     title = models.CharField(max_length=200)
+    description = models.CharField(max_length=1000)
     sdlc_phase = models.CharField(max_length=30)
     role = models.CharField(max_length=30)
 
