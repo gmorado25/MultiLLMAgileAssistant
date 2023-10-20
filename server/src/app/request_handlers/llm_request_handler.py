@@ -32,13 +32,13 @@ def getQueryResponses(request: HttpRequest) -> HttpResponse:
 
 
 
-{
-    "models": [
-        {"Name": "GPT3.5"},
-        {"Name": "Bard"},
-        {"Name": "Claude"},
-        {"Name": "Test"}
-    ],
-    "prompt": "You are a helpful assistant who solves math problems. Write the following equation using algebraic symbols then show the steps to solve the problem:",
-    "data": "x^3 + 7 = 12"
-}
+# {
+#     "models": [
+#         {"Name": "GPT3.5"},
+#         {"Name": "Bard"},
+#         {"Name": "Claude"},
+#         {"Name": "Test"}
+#     ],
+#     "prompt": "You are a helpful assistant who solves math problems. Write the following equation using algebraic symbols then show the steps to solve the problem:",
+#     "data": "x^3 + 7 = 12"
+# }
