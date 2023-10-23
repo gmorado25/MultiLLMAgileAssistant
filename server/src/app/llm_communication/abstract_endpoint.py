@@ -3,7 +3,7 @@ from langchain.chains import LLMChain
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 
-class AbstractModel:
+class AbstractEndpoint:
 
     """ -----------------------------------------------------------------------
     Summary:

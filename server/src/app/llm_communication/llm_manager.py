@@ -1,10 +1,10 @@
 import json, os
 from io import TextIOWrapper
 from typing import Type
-from .abstract_model import AbstractModel
+from .abstract_endpoint import AbstractEndpoint
 from .llm_response import LLMResponse
 
-_instances: dict[str, AbstractModel] = {}
+_instances: dict[str, AbstractEndpoint] = {}
 
 """ -----------------------------------------------------------------------
 Summary:
@@ -65,7 +65,7 @@ Summary:
 Returns:
     N/A
 ----------------------------------------------------------------------- """ 
-def _setupModels(models: dict[str, Type[AbstractModel]]) -> None:
+def _setupModels(models: dict[str, Type[AbstractEndpoint]]) -> None:
     for name, model in models.items():
         try:
             _instances[name] = model()
@@ -82,7 +82,7 @@ Summary:
 Returns:
     N/A
 ----------------------------------------------------------------------- """ 
-def init(models: dict[str, Type[AbstractModel]]) -> None:
+def init(models: dict[str, Type[AbstractEndpoint]]) -> None:
     if (len(_instances) == 0):
         _setupAuthentication()
         _setupModels(models)

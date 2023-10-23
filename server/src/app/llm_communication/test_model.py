@@ -1,7 +1,7 @@
 from langchain.llms.fake import FakeListLLM
-from .abstract_model import AbstractModel
+from .abstract_endpoint import AbstractEndpoint
 
-class MockInputModel(AbstractModel):
+class MockInputModel(AbstractEndpoint):
 
     def __init__(self) -> None:
         super().__init__(None)
