@@ -16,7 +16,7 @@ models = {
     #"Claude": Claude2
 }
 
-config = "config/mock-config.json" #"credentials/authentication-config.json"
+config = "config/mock-config.json" #"config/config.json"
 
 class AppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'

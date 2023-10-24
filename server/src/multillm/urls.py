@@ -17,11 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from app import views
+from app.request_handlers.llm_request_handler import LLMRequestHandler
 
 urlpatterns = [
+    path('', include('django_nextjs.urls')),
+    path('', views.syncNextJS),
+    path('dashboard', views.syncNextJS),
     path('admin/', admin.site.urls),
-    path('generate/', views.llm_output),
-    path('prompts/',views.prompt_list),
-    path('prompts/<int:id>',views.prompt_detail)
+    path('generate/', LLMRequestHandler.as_view()),
+    path('prompts/', views.prompt_list),
+    path('prompts/<int:id>', views.prompt_detail)
 ]
 

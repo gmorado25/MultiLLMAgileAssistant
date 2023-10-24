@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-q(pe&1(927omj__^48*0w9hx)jb!9hn*qsow^4dra^11z7a*m&
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+APPEND_SLASH = False
 
 # Application definition
 
@@ -37,8 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_nextjs',
     'app'
 ]
+
+NEXTJS_SETTINGS = {
+    "nextjs_server_url": "http://127.0.0.1:3000",
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
