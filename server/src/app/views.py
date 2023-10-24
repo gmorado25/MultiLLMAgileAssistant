@@ -45,4 +45,4 @@ def prompt_detail(request, id):
         pass
     elif request.method == 'DELETE':
         pass
-        #testing 1
+    
