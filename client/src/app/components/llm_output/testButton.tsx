@@ -7,6 +7,7 @@ class TestButton extends React.Component {
     fetchLLMOutput = async () => {
         try {
       
+          // make an API call the the /generate endpoint, pass in the prompts, list of models to query, etc.
           const res = await fetch("http://localhost:8000/generate/", {
             method: "POST",
             body: JSON.stringify({
@@ -19,8 +20,12 @@ class TestButton extends React.Component {
             }
           });
       
+          // parse the returned json
           const data = await res.json();
           console.log(data);
+
+          // we have the output queried from the server in the variable "data", now insert output 'cards'
+          // for each response returned. (idk how to create those react components and add them dynamically)
           for (let i = 0; i < data.length; i++) {
             let linebreak = document.createElement("br");
             document.getElementsByClassName("Outputs")[0].append(data[i].model, linebreak, data[i].response, linebreak, linebreak)
