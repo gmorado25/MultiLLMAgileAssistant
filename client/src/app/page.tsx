@@ -4,6 +4,7 @@ import { Footer } from "./components/layouts/footer";
 import Link from "next/link";
 import OutputBlock from "./components/llm_output/outputBlock";
 import './styles.css'; // Import the CSS file
+import TestButton from "./components/llm_output/testButton";
 
 const Home: NextPage = () => {
   return (
@@ -111,10 +112,9 @@ const Home: NextPage = () => {
             </div>
           </div>
         </div>
+        <TestButton></TestButton>
         <div className="Outputs">
-              <OutputBlock llm="Chat GBT" output="test1"></OutputBlock>
-              <OutputBlock llm="Bart" output="test2"></OutputBlock>
-              <OutputBlock llm="Lama" output="test3"></OutputBlock>
+  
         </div>
       </div>
       <Footer></Footer>

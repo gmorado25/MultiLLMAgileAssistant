@@ -5,11 +5,10 @@ from .models import Prompt
 from .serializers import PromptSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from django_nextjs.render import render_nextjs_page_sync
 
-# def process_request(request: HttpRequest) -> JsonResponse:
-#     # Process the request here
-#     data = {'response': 'Received the request successfully!'}
-#     return JsonResponse(data)
+def syncNextJS(request):
+    return render_nextjs_page_sync(request)
 
 @api_view(['GET','POST'])
 def prompt_list(request):
@@ -24,10 +23,6 @@ def prompt_list(request):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-@api_view(['POST'])
-def llm_output(request: HttpRequest) -> JsonResponse:
-    return LLMRequestHandler.getQueryResponses(request)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def prompt_detail(request, id):
