@@ -112,9 +112,10 @@ const Home: NextPage = () => {
             </div>
           </div>
         </div>
-        <TestButton></TestButton>
         <div className="Outputs">
-  
+          <OutputBlock llm="Chat GBT" output="test1"></OutputBlock>
+          <OutputBlock llm="Bart" output="test2"></OutputBlock>
+          <OutputBlock llm="Lama" output="test3"></OutputBlock>
         </div>
       </div>
       <Footer></Footer>
