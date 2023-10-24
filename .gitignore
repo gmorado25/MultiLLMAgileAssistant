@@ -1,6 +1,7 @@
 # !!!!! SECURITY - IMPORTANT !!!!! ignore directory to store auth keys and credentials
-server/credentials/*
-!server/credentials/mock-config.json
+server/config/*
+!server/config/mock-config.json
+!server/config/requirements.txt
 
 # Environment directories
 server/.project_env
