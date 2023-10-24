@@ -39,7 +39,7 @@ echo [*] Installing packages...
 pip install django & pip install djangorestframework & pip install langchain[llms] & pip install google-cloud-aiplatform & pip install anthropic
 
 if [ $? -ne 0 ]; then
-    echo [-] An issue installing packages has occurred.
+    echo [-] An issue installing server packages has occurred.
     echo [-] Unable to finish setup.
     exit 1
 fi
@@ -49,14 +49,18 @@ echo -e "[+] Server files installed.\n"
 
 echo [+] Finished server project setup...
 
+source deactivate
 cd ../client
 
 echo [*] Setting up client app...
 source npm install
 
-# Put setup for front end and React setup here...
-npm install
+if [ $? -ne 0 ]; then
+    echo [-] An issue installing client packages has occurred.
+    echo [-] Unable to finish setup.
+    exit 1
+fi
+
 echo [+] Packages Installed successfully.
 echo [+] Client files installed.
-npm install @mui/joy @emotion/react @emotion/styled
-npm install @mui/material @emotion/react @emotion/styled
+
