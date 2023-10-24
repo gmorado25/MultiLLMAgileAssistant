@@ -22,7 +22,7 @@ from app.request_handlers.llm_request_handler import LLMRequestHandler
 urlpatterns = [
     path('', include('django_nextjs.urls')),
     path('', views.syncNextJS),
-    path('dashboard', views.syncNextJS),
+    path('dashboard/', views.syncNextJS),
     path('admin/', admin.site.urls),
     path('generate/', LLMRequestHandler.as_view()),
     path('prompts/', views.prompt_list),
