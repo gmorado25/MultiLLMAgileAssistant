@@ -95,7 +95,7 @@ Starting the client is simple once dependencies are in place. Open a terminal, n
 npm run dev
 ```
 
-Alternative way:
+Alternate script, run startup script from project root:
 
 ```
 bash client.sh
