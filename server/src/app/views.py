@@ -15,7 +15,7 @@ def llm_list(request: HttpRequest) -> Response:
     return Response(llm_manager.getModels())
 
 @api_view(['GET','POST'])
-def prompt_list(request):
+def prompt_list(request: HttpRequest) -> Response:
 
     if request.method == 'GET':
         prompts = Prompt.objects.all()
@@ -31,7 +31,7 @@ def prompt_list(request):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def prompt_id(request, id):
+def prompt_id(request: HttpRequest, id) -> Response:
 
     try:
         prompt = Prompt.objects.get(pk=id)
@@ -40,7 +40,7 @@ def prompt_id(request, id):
 
     if request.method == 'GET':
         serializer = PromptSerializer(prompt)
-        return Response(serializer.data)
+        return JsonResponse(serializer.data)
     elif request.method == 'PUT':
         #serializer = PromptSerializer(drink,)
         pass
