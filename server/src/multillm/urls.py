@@ -27,6 +27,6 @@ urlpatterns = [
     path('models/', views.llm_list),
     path('generate/', LLMRequestHandler.as_view()),
     path('prompts/', views.prompt_list),
-    path('prompts/<int:id>', views.prompt_detail)
+    path('prompts/<int:id>', views.prompt_id)
 ]
 

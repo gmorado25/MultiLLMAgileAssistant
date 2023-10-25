@@ -22,14 +22,16 @@ def prompt_list(request):
         serializer = PromptSerializer(prompts, many=True)
         return JsonResponse({'prompts':serializer.data})
     
-    if request.method == 'POST':
+    elif request.method == 'POST':
         serializer = PromptSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def prompt_detail(request, id):
+def prompt_id(request, id):
 
     try:
         prompt = Prompt.objects.get(pk=id)
@@ -39,9 +41,11 @@ def prompt_detail(request, id):
     if request.method == 'GET':
         serializer = PromptSerializer(prompt)
         return Response(serializer.data)
-    elif request.method == 'POST':
+    elif request.method == 'PUT':
         #serializer = PromptSerializer(drink,)
         pass
     elif request.method == 'DELETE':
         pass
+    else:
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
