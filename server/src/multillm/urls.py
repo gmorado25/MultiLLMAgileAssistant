@@ -24,6 +24,7 @@ urlpatterns = [
     path('', views.syncNextJS),
     path('dashboard/', views.syncNextJS),
     path('admin/', admin.site.urls),
+    path('models/', views.llm_list),
     path('generate/', LLMRequestHandler.as_view()),
     path('prompts/', views.prompt_list),
     path('prompts/<int:id>', views.prompt_detail)

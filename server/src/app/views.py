@@ -1,14 +1,18 @@
 from django.http import HttpRequest, JsonResponse
-from .request_handlers import llm_request_handler as LLMRequestHandler
-from rest_framework.decorators import api_view
 from .models import Prompt
 from .serializers import PromptSerializer
+from .llm_communication import llm_manager
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django_nextjs.render import render_nextjs_page_sync
 
-def syncNextJS(request):
+def syncNextJS(request: HttpRequest) -> Response:
     return render_nextjs_page_sync(request)
+
+@api_view(['GET'])
+def llm_list(request: HttpRequest) -> Response:
+    return Response(llm_manager.getModels())
 
 @api_view(['GET','POST'])
 def prompt_list(request):
