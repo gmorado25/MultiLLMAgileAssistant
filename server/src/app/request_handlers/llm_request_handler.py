@@ -43,7 +43,7 @@ class LLMRequestHandler(APIView):
             responses.append(result.toDict())
         return responses
 
-    def post(self, request: Request, format=None):
+    def post(self, request: Request, format=None) -> Response:
         data = request.data
         models = data.get('models')
 

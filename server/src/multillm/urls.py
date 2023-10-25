@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework.urlpatterns import format_suffix_patterns
 from app import views
 from app.request_handlers.llm_request_handler import LLMRequestHandler
+from app.request_handlers.prompt_attribute_search import PromptSearch
 
 urlpatterns = [
     path('', include('django_nextjs.urls')),
@@ -27,7 +29,8 @@ urlpatterns = [
     path('models/', views.llm_list),
     path('generate/', LLMRequestHandler.as_view()),
     path('prompts/', views.prompt_list),
-    path('prompts/<int:id>', views.prompt_id),
-    path('prompts/<str:attributes>', views.prompt_attributes)
+    path('prompts/<int:id>/', views.prompt_id),
+    path('prompts/search/', PromptSearch.as_view())
 ]
 
+urlpatterns = format_suffix_patterns(urlpatterns)
