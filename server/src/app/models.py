@@ -28,3 +28,6 @@ class Prompt(models.Model):
     description = models.CharField(max_length=1000)
     sdlc_phase = models.CharField(max_length=30)
     role = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.title.__str__()
