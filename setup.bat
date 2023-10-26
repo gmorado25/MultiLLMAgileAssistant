@@ -35,7 +35,6 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo [*] Installing packages...
 
-@Rem This brings in these 2 modules and all their dependencies
 Call pip install -r config/requirements.txt
 
 if %ERRORLEVEL% NEQ 0 (
@@ -52,7 +51,6 @@ echo [+] Finished server project setup...
 Call deactivate
 cd ../client
 
-@REM Put setup for front end and React setup here...
 echo [*] Setting up client app...
 Call npm install
 

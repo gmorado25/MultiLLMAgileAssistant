@@ -35,8 +35,7 @@ fi
 
 echo [*] Installing packages...
 
-# This brings in these 2 modules and all their dependencies
-pip install -r config/requirements.txt
+source pip install -r config/requirements.txt
 
 if [ $? -ne 0 ]; then
     echo [-] An issue installing server packages has occurred.
