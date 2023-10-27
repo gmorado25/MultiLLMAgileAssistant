@@ -35,11 +35,10 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo [*] Installing packages...
 
-@Rem This brings in these 2 modules and all their dependencies
-Call pip install django & pip install djangorestframework & pip install langchain[llms] & pip install google-cloud-aiplatform & pip install anthropic
+Call pip install -r config/requirements.txt
 
 if %ERRORLEVEL% NEQ 0 (
-    echo [-] An issue installing packages has occurred.
+    echo [-] An issue installing server packages has occurred.
     echo [-] Unable to finish setup.
     Exit /B 1
 )
@@ -49,11 +48,17 @@ echo [+] Server files installed. & echo:
 
 echo [+] Finished server project setup...
 
+Call deactivate
 cd ../client
 
 echo [*] Setting up client app...
-Call "npm install"
+Call npm install
 
-@REM Put setup for front end and React setup here...
+if %ERRORLEVEL% NEQ 0 (
+    echo [-] An issue installing client packages has occurred.
+    echo [-] Unable to finish setup.
+    Exit /B 1
+)
+
 echo [+] Packages Installed successfully.
 echo [+] Client files installed.

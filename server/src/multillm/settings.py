@@ -26,9 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,8 +35,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_nextjs',
     'app'
 ]
+
+NEXTJS_SETTINGS = {
+    "nextjs_server_url": "http://127.0.0.1:3000",
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

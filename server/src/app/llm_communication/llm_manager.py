@@ -1,10 +1,13 @@
 import json, os
 from io import TextIOWrapper
 from typing import Type
-from .abstract_model import AbstractModel
+from threading import Thread
+
+from .returning_thread import ReturningThread
+from .abstract_endpoint import AbstractEndpoint
 from .llm_response import LLMResponse
 
-_instances: dict[str, AbstractModel] = {}
+_instances: dict[str, AbstractEndpoint] = {}
 
 """ -----------------------------------------------------------------------
 Summary:
@@ -65,13 +68,57 @@ Summary:
 Returns:
     N/A
 ----------------------------------------------------------------------- """ 
-def _setupModels(models: dict[str, Type[AbstractModel]]) -> None:
+def _setupModels(models: dict[str, Type[AbstractEndpoint]]) -> None:
     for name, model in models.items():
         try:
             _instances[name] = model()
         except Exception as error:
             print(f"Cannot set up LLM module {name}:", error)
 
+""" -----------------------------------------------------------------------
+Summary:
+    Obtains an instance of the requested model and queries it with the
+    given prompt and dataset.
+
+Returns:
+    Returns an LLMResponse object containing the model name and the 
+    result.
+----------------------------------------------------------------------- """ 
+def _getResponse(prompt: str, dataset: str, model: str) -> LLMResponse:
+        llm = _instances.get(model)
+        output = llm.query(prompt, dataset)
+        return LLMResponse(model, output)
+
+""" -----------------------------------------------------------------------
+Summary:
+    Attempts the query the given llm with the prompt and user data.
+    Returns the result or if an exception occurs it will return an error 
+    as an LLMResponse.
+
+Returns:
+    Returns an LLMResponse object containing the model name and the 
+    result.
+----------------------------------------------------------------------- """ 
+def _tryQuery(prompt: str, dataset: str, model: str) -> LLMResponse:
+        try:
+            return _getResponse(prompt, dataset, model)
+        except Exception as error:
+            msg = f"Error: cannot query LLM {model}." + \
+                  "This can occur if the model has not been setup properly," + \
+                  "or has been mispelled in the request. ->"
+            print(msg, error, "\n\n")
+            
+            return LLMResponse(model, "An error has occured.")
+
+""" -----------------------------------------------------------------------
+Summary:
+    Returns a list of models currently set up in the manager.
+
+Returns:
+    Returns a list of strings for the names of available models.
+----------------------------------------------------------------------- """ 
+def getModels() -> list[str]:
+    return list(_instances.keys())
 
 """ -----------------------------------------------------------------------
 Summary:
@@ -82,7 +129,7 @@ Summary:
 Returns:
     N/A
 ----------------------------------------------------------------------- """ 
-def init(models: dict[str, Type[AbstractModel]]) -> None:
+def init(models: dict[str, Type[AbstractEndpoint]]) -> None:
     if (len(_instances) == 0):
         _setupAuthentication()
         _setupModels(models)
@@ -101,17 +148,17 @@ Returns:
     Returns an LLMResponse array containing query responses from each of 
     the requested LLMs.
 ----------------------------------------------------------------------- """ 
-def query(prompt: str, dataset: str, models: list[str]) -> LLMResponse:
+def query(prompt: str, dataset: str, models: list[str]) -> list[LLMResponse]:
     responses: list[LLMResponse] = []
+    threads: list[ReturningThread] = []
+
     for model in models:
-        try:
-            llm = _instances.get(model)
-            output = llm.query(prompt, dataset)
-            result = LLMResponse(model, output)
-            responses.append(result)
-        except Exception as error:
-            print(f"Error in LLM {model}:", error)
-            result = LLMResponse(model, "An error has occured.")
-            responses.append(result)
+        t = ReturningThread(target=_tryQuery, args=(prompt, dataset, model))
+        threads.append(t)
+        t.start()
+
+    for thread in threads:
+        result = thread.join()
+        responses.append(result)
 
     return responses
