@@ -8,7 +8,10 @@ import Option from "@mui/joy/Option";
 
 import PromptModal from "./prompt-modal";
 
-import { useLLMStore } from "../../zustand-stores/page/store/LLM-store";
+import {
+  setOutputData,
+  useLLMStore,
+} from "../../zustand-stores/page/store/LLM-store";
 import UseGenerate from "@/app/zustand-stores/page/hooks/use-generate";
 import useGenerate from "@/app/zustand-stores/page/hooks/use-generate";
 
@@ -57,7 +60,14 @@ const LLMSearchToolbar: FC = () => {
             </div>
             <Button
               // eslint-disable-next-line react-hooks/rules-of-hooks
-              onClick={() => useGenerate()}
+              // onClick={() => useGenerate()}
+              onClick={() =>
+                setOutputData([
+                  { model: "ChatGPT", response: "test1" },
+                  { model: "Bard", response: "test2" },
+                  { model: "Llama", response: "test3" },
+                ])
+              }
               className=""
               disabled={false}
               variant="solid"
