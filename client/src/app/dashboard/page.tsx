@@ -6,7 +6,6 @@ import Link from "next/link";
 import OutputBlock from "../components/llm_output/outputBlock";
 import LlmInputSearchToolbar from "../components/llm_input/llm-input-search-toolbar";
 import { useLLMStore } from "../zustand-stores/page/store/LLM-store";
-import { useEffect } from "react";
 
 const multiLLM: NextPage = () => {
   const outputData = useLLMStore.use.outputData();
