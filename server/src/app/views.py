@@ -45,6 +45,7 @@ def prompt_detail(request: HttpRequest, id: int, format=None) -> Response:
     elif request.method == 'PUT':
         serializer = PromptSerializer(prompt, data=request.data)
         if serializer.is_valid():
+            serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
