@@ -22,7 +22,7 @@ const Home: NextPage = () => {
             rel="noopener noreferrer"
           >
             <Image
-              src="/argo.svg"
+              src="http://localhost:3000/argo.svg"
               alt="argo logo"
               className="dark:invert"
               width={80}
