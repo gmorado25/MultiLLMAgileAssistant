@@ -21,7 +21,7 @@ def prompt_list(request: HttpRequest, format=None) -> Response:
     if request.method == 'GET':
         prompts = Prompt.objects.all()
         serializer = PromptSerializer(prompts, many=True)
-        return Response({'prompts':serializer.data})
+        return Response(serializer.data)
     
     elif request.method == 'POST':
         serializer = PromptSerializer(data=request.data)
@@ -30,9 +30,9 @@ def prompt_list(request: HttpRequest, format=None) -> Response:
             return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
+    
 @api_view(['GET', 'PUT', 'DELETE'])
-def prompt_id(request: HttpRequest, id: int, format=None) -> Response:
+def prompt_detail(request: HttpRequest, id: int, format=None) -> Response:
 
     try:
         prompt = Prompt.objects.get(pk=id)
@@ -43,9 +43,12 @@ def prompt_id(request: HttpRequest, id: int, format=None) -> Response:
         serializer = PromptSerializer(prompt)
         return Response(serializer.data)
     elif request.method == 'PUT':
-        #serializer = PromptSerializer(drink,)
-        pass
+        serializer = PromptSerializer(prompt, data=request.data)
+        if serializer.is_valid():
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
-        pass
+        prompt.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
     else:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
