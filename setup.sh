@@ -52,7 +52,7 @@ source deactivate
 cd ../client
 
 echo [*] Setting up client app...
-source npm install
+npm install
 
 if [ $? -ne 0 ]; then
     echo [-] An issue installing client packages has occurred.
