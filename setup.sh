@@ -35,7 +35,7 @@ fi
 
 echo [*] Installing packages...
 
-source pip install -r config/requirements.txt
+pip install -r config/requirements.txt
 
 if [ $? -ne 0 ]; then
     echo [-] An issue installing server packages has occurred.
