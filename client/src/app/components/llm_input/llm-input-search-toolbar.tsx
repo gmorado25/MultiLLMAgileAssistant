@@ -1,3 +1,4 @@
+"use client";
 import React, { FC } from "react";
 import { Divider } from "@mui/material";
 import Button from "@mui/joy/Button";
@@ -7,7 +8,9 @@ import Option from "@mui/joy/Option";
 
 import PromptModal from "./prompt-modal";
 
-const SelectedPrompt = "Prompt";
+import { useLLMStore } from "../../zustand-stores/page/store/LLM-store";
+import UseGenerate from "@/app/zustand-stores/page/hooks/use-generate";
+import useGenerate from "@/app/zustand-stores/page/hooks/use-generate";
 
 const LLMSearchToolbar: FC = () => {
   return (
@@ -52,7 +55,13 @@ const LLMSearchToolbar: FC = () => {
                 Clear
               </Button>
             </div>
-            <Button className="" disabled={false} variant="solid">
+            <Button
+              // eslint-disable-next-line react-hooks/rules-of-hooks
+              onClick={() => useGenerate()}
+              className=""
+              disabled={false}
+              variant="solid"
+            >
               Submit
             </Button>
           </div>
