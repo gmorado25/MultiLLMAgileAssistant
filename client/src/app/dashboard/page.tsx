@@ -2,6 +2,8 @@ import Image from "next/image";
 import { NextPage } from "next";
 import { Footer } from "../components/layouts/footer";
 import Link from "next/link";
+import OutputBlock from "../components/llm_output/outputBlock";
+import LlmInputSearchToolbar from "../components/llm_input/llm-input-search-toolbar";
 
 const multiLLM: NextPage = () => {
   return (
@@ -21,7 +23,7 @@ const multiLLM: NextPage = () => {
             rel="noopener noreferrer"
           >
             <Image
-              src="/argo.webp"
+              src="/argo.svg"
               alt="argo logo"
               className="dark:invert"
               width={80}
@@ -31,84 +33,11 @@ const multiLLM: NextPage = () => {
           </a>
         </div>
       </div>
-
-      <div className="items-start">
-        <div className="w-full items-start grid grid-cols-8 gap-8">
-          <div className="col-span-2">
-            <div className="pb-10">
-              <h1 className="font-bold">Version 0.23.10.0130</h1>
-              <li>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Commodi cum magni assumenda velit porro quidem illo eius
-                temporibus? Quaerat, velit nobis? At voluptas velit quidem quos.
-                Autem aspernatur rerum eos.
-              </li>
-              <li>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Commodi cum magni assumenda velit porro quidem illo eius
-                temporibus? Quaerat, velit nobis? At voluptas velit quidem quos.
-                Autem aspernatur rerum eos.
-              </li>
-              <li>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Commodi cum magni assumenda velit porro quidem illo eius
-                temporibus? Quaerat, velit nobis? At voluptas velit quidem quos.
-                Autem aspernatur rerum eos.
-              </li>
-            </div>
-          </div>
-          <div className="col-span-4">
-            <div className="pb-10">
-              <h1 className="font-bold">Changes</h1>
-              <li>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Commodi cum magni assumenda velit porro quidem illo eius
-                temporibus? Quaerat, velit nobis? At voluptas velit quidem quos.
-                Autem aspernatur rerum eos.
-              </li>
-              <li>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Commodi cum magni assumenda velit porro quidem illo eius
-                temporibus? Quaerat, velit nobis? At voluptas velit quidem quos.
-                Autem aspernatur rerum eos.
-              </li>
-              <li>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Commodi cum magni assumenda velit porro quidem illo eius
-                temporibus? Quaerat, velit nobis? At voluptas velit quidem quos.
-                Autem aspernatur rerum eos.
-              </li>
-            </div>
-            <div>
-              <h1 className="font-bold">Announcements</h1>
-              <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</li>
-              <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</li>
-            </div>
-          </div>
-          <div className="col-span-2">
-            <div className="pb-10">
-              <h1 className="font-bold">References</h1>
-              <li>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Commodi cum magni assumenda velit porro quidem illo eius
-                temporibus? Quaerat, velit nobis? At voluptas velit quidem quos.
-                Autem aspernatur rerum eos.
-              </li>
-              <li>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Commodi cum magni assumenda velit porro quidem illo eius
-                temporibus? Quaerat, velit nobis? At voluptas velit quidem quos.
-                Autem aspernatur rerum eos.
-              </li>
-              <li>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Commodi cum magni assumenda velit porro quidem illo eius
-                temporibus? Quaerat, velit nobis? At voluptas velit quidem quos.
-                Autem aspernatur rerum eos.
-              </li>
-            </div>
-          </div>
-        </div>
+      <LlmInputSearchToolbar></LlmInputSearchToolbar>
+      <div className="Outputs">
+        <OutputBlock llm="Chat GBT" output="test1"></OutputBlock>
+        <OutputBlock llm="Bart" output="test2"></OutputBlock>
+        <OutputBlock llm="Lama" output="test3"></OutputBlock>
       </div>
       <Footer></Footer>
     </main>
