@@ -11,12 +11,12 @@ import os
 # use the test model for now; invoked with the same interface as the real ones
 models = {
     "Test": MockInputModel,
-    #"GPT3.5": GPT_3_5,       
-    #"Bard": ChatBison,
-    #"Claude": Claude2
+    "GPT3.5": GPT_3_5,       
+    "Bard": ChatBison,
+    "Claude": Claude2
 }
 
-config = "config/mock-config.json" #"config/config.json"
+config = "config/config.json" #"config/config.json"
 
 class AppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'

@@ -38,7 +38,11 @@ const useGenerate = async () => {
           'X-CSRFToken': csrftoken,
       }
     }
-    axios.post('/generate/', body, config).then((response: any)=> (alert(response)))
+    axios.post("/generate.json", body, config).then((response: any) => {
+      const data = response.data;
+      console.log(response)
+      setOutputData(data);
+    });
 
     // const res = await fetch("http://localhost:8000/generate/", {
     //   method: "POST",
