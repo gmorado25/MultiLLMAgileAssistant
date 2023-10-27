@@ -60,14 +60,7 @@ const LLMSearchToolbar: FC = () => {
             </div>
             <Button
               // eslint-disable-next-line react-hooks/rules-of-hooks
-              // onClick={() => useGenerate()}
-              onClick={() =>
-                setOutputData([
-                  { model: "ChatGPT", response: "test1" },
-                  { model: "Bard", response: "test2" },
-                  { model: "Llama", response: "test3" },
-                ])
-              }
+              onClick={() => useGenerate()}
               className=""
               disabled={false}
               variant="solid"
