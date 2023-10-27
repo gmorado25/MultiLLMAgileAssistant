@@ -13,8 +13,12 @@ import { Divider } from "@mui/material";
 import { Input } from "@mui/joy";
 import SearchIcon from "@mui/icons-material/Search";
 import PromptBlock from "./promptBlock";
+import useGetPrompts from "@/app/zustand-stores/page/hooks/use-get-prompts";
 
 export default function LayoutModalDialog() {
+  //Lazy loading the hooks to get the prompts and place in zustand store for retrieval
+  useGetPrompts();
+
   const [layout, setLayout] = React.useState<
     ModalDialogProps["layout"] | undefined
   >(undefined);
