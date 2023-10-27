@@ -1,11 +1,16 @@
+"use client";
 import Image from "next/image";
 import { NextPage } from "next";
 import { Footer } from "../components/layouts/footer";
 import Link from "next/link";
 import OutputBlock from "../components/llm_output/outputBlock";
 import LlmInputSearchToolbar from "../components/llm_input/llm-input-search-toolbar";
+import { useLLMStore } from "../zustand-stores/page/store/LLM-store";
+import { useEffect } from "react";
 
 const multiLLM: NextPage = () => {
+  const outputData = useLLMStore.use.outputData();
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-12">
       <div className="w-full items-center justify-between font-mono text-sm lg:flex">
@@ -34,11 +39,17 @@ const multiLLM: NextPage = () => {
         </div>
       </div>
       <LlmInputSearchToolbar></LlmInputSearchToolbar>
-      <div className="Outputs">
-        <OutputBlock llm="Chat GBT" output="test1"></OutputBlock>
-        <OutputBlock llm="Bart" output="test2"></OutputBlock>
-        <OutputBlock llm="Lama" output="test3"></OutputBlock>
-      </div>
+      {!!outputData && (
+        <div className="Outputs flex flex-row">
+          {outputData.map(({ model, response }) => (
+            <OutputBlock
+              key={model}
+              llm={model}
+              output={response}
+            ></OutputBlock>
+          ))}
+        </div>
+      )}
       <Footer></Footer>
     </main>
   );
