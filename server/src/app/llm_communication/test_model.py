@@ -3,8 +3,10 @@ from .abstract_endpoint import AbstractEndpoint
 
 class MockInputModel(AbstractEndpoint):
 
-    def __init__(self) -> None:
+    def __init__(self, **kwargs) -> None:
         super().__init__(None)
+        self.response = kwargs.get('response')
+        self.model_name = kwargs.get('model_name')
 
     """ -----------------------------------------------------------------------
     Summary:
@@ -19,9 +21,5 @@ class MockInputModel(AbstractEndpoint):
         Returns a mock response from the query.
     ----------------------------------------------------------------------- """ 
     def query(self, prompt: str, dataset: str) -> str:
-        response = f"[*] Mock model invoked {self}\n" \
-            + "[*] System Prompt: \"" + prompt + "\"\n[*] Dataset: \"" \
-            + dataset + "\""
-        
-        self._model = FakeListLLM(responses=[response])
+        self._model = FakeListLLM(responses=[self.response])
         return super().query(prompt, dataset)
