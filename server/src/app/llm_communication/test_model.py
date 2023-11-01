@@ -21,5 +21,10 @@ class MockInputModel(AbstractEndpoint):
         Returns a mock response from the query.
     ----------------------------------------------------------------------- """ 
     def query(self, prompt: str, dataset: str) -> str:
-        self._model = FakeListLLM(responses=[self.response])
+        response = self.response or \
+            f"[*] Mock model invoked: {self.model_name}\n" \
+          + f"[*] System Prompt: {prompt}\n" \
+          + f"[*] Dataset: {dataset}\n"
+        
+        self._model = FakeListLLM(responses=[response])
         return super().query(prompt, dataset)

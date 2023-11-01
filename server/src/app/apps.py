@@ -15,7 +15,7 @@ class AppConfig(AppConfig):
 
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'app'
-    config_path = "config/config.json"
+    config_path = "config/mock-config.json"
 
     def __setEnvironmentVariable(self, variable: dict[str, str]) -> None:
         """
@@ -80,14 +80,17 @@ class AppConfig(AppConfig):
 
             # avoid calling paid APIs for regular testing until we are ready for integration
             # use the test model for now; invoked with the same interface as the real ones
-            name = "test-model"
-            prompt = "You are a helpful assistant who solves math problems. Write the following equation using algebraic symbols then show the steps to solve the problem:"
-            dataset = "x^3 + 7 = 12"
-            test_response = f"[*] Mock model invoked: {name}\n" \
-                          + f"[*] System Prompt: {prompt}\n" \
-                          + f"[*] Dataset: {dataset}\n"
             
-            LLMManager.registerModel(id="Test", model=MockInputModel, model_kwargs={"response": test_response, "model_name": "test-model"})
+            # An example of registering a model with the manager. 
+            # "id" is the tag used to identify and query the model later
+            # "model" is the class type to construct
+            # "model_kwargs" is a dictionary of arguments to conctrust the class with
+            args = {
+                "model_name": "test-model",
+                "response": "Hello!"
+            }
+            LLMManager.registerModel(id="Test", model=MockInputModel, model_kwargs=args)
+
             #LLMManager.registerModel(id="GPT3.5", model=GPT, model_kwargs={"model_name": "gpt-3.5-turbo"})
             #LLMManager.registerModel(id="Bard", model=ChatBison, model_kwargs={"model_name": "chat-bison"})
             #LLMManager.registerModel(id="Claude", model=Claude2, model_kwargs={"model_name": "claude-2"})
