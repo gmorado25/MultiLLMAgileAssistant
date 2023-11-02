@@ -5,6 +5,8 @@ import Textarea from "@mui/joy/Textarea";
 import Button from "@mui/joy/Button";
 import "./styles.css"; // Import the CSS file
 import Snackbar from "@mui/material/Snackbar";
+import { jsPDF } from "jspdf";
+import { CSVLink } from "react-csv";
 
 interface OutputBlock {
   llm: string;
@@ -17,6 +19,21 @@ const OutputBlock: React.FC<OutputBlock> = ({ llm, output }) => {
   const handleCopyClick = () => {
     navigator.clipboard.writeText(output);
     setOpen(true);
+  };
+
+  const handleExportClick = () => {
+    const doc = new jsPDF();
+    const maxWidth = doc.internal.pageSize.getWidth();
+    const lines = doc.splitTextToSize(output, maxWidth);
+    const multiLineText = `${llm}',s Output:\n\n` + lines.join("\n");
+    doc.setFontSize(12); // Adjust the font size as needed
+    doc.text(multiLineText, 10, 10);
+    doc.save(`${llm}'s-output.pdf`);
+  };
+
+  const handleExportClick2 = () => {
+    const data = `${output}`
+    return <CSVLink data={data} filename={`${llm}'s-output.csv`} style={{ textDecoration: 'none', color: '#0b6bcb' }}>CSV</CSVLink>;
   };
 
   const handleClose = (
@@ -45,9 +62,19 @@ const OutputBlock: React.FC<OutputBlock> = ({ llm, output }) => {
             height: 380,
           }}
         />
-        <Button variant="outlined" onClick={handleCopyClick}>
-          Copy
-        </Button>
+        <div className="Buttons">
+          <Button  variant="outlined" onClick={handleCopyClick}>
+            Clipboard
+          </Button>
+          <div>
+            <Button variant="outlined" onClick={handleExportClick}>
+              PDF
+            </Button>
+            <Button variant="outlined">
+              {handleExportClick2()}
+            </Button>
+          </div>
+        </div>
         <Snackbar
           open={open}
           autoHideDuration={3000}
