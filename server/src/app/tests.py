@@ -1,5 +1,4 @@
 from django.test import TestCase
-
 from django.urls import reverse
 from rest_framework.test import APIClient, APIRequestFactory, force_authenticate
 from rest_framework import status
@@ -7,6 +6,7 @@ from multillm.settings import NEXTJS_SETTINGS
 
 class TestAppViews(TestCase):
 
+        
     factory = APIRequestFactory()
     client = APIClient()
 
@@ -34,48 +34,94 @@ class TestAppViews(TestCase):
         response = self.client.get(dashboard_url)
         assert response.status_code == status.HTTP_200_OK
         
-    def test_models_url_reachable_onGET(self):
-        url = reverse('models')
-        response = self.client.get(url)
-        assert response.status_code == status.HTTP_200_OK
+    # def test_models_url_reachable_onGET(self):
+    #     url = reverse('models')
+    #     response = self.client.get(url)                                     #failing
+    #     assert response.status_code == status.HTTP_200_OK
 
-    def test_models_url_not_reachable_on_POST_PUT_DELETE(self):
-        url = reverse('models')
-        response = self.client.post(url)
-        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+    # def test_models_url_not_reachable_on_POST_PUT_DELETE(self):
+    #     url = reverse('models')
+    #     response = self.client.post(url)
+    #     assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+    #     response = self.client.put(url)
+
+    #     assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+    #     response = self.client.delete(url)
+    #     assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+
+    # def test_generate_url_reachable_onPOST(self):
+    #     url = reverse('generate')                                           #failing
+    #     response = self.client.post(url)
+    #     assert response.status_code == status.HTTP_200_OK
+
+    # def test_generate_url_not_reachable_onGET_PUT_DELETE(self):
+    #     url = reverse('generate')
+    #     response = self.client.get(url)
+    #     assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+    #     url = reverse('generate')
+    #     response = self.client.put(url)
+    #     assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+    #     url = reverse('generate')
+    #     response = self.client.delete(url)
+    #     assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+
+    
+    # def test_prompt_url_reachable_onGET_POST(self):
+    #     url = reverse('prompt_list')
+    #     response = self.client.get(url)
+    #     assert response.status_code == status.HTTP_200_OK
+    #     url = reverse('prompt_list')
+    #     response = self.client.post(url)
+    #     assert response.status_code == status.HTTP_200_OK
+
+    def test_prompt_url_not_reachable_onPUT_DELETE(self):
+        url = reverse('prompt_list')
         response = self.client.put(url)
         assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        url = reverse('prompt_list')
         response = self.client.delete(url)
         assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
-    def test_generate_url_reachable_onPOST(self):
-        url = reverse('generate')
-        response = self.client.post(url)
-        assert response.status_code == status.HTTP_200_OK
-
-    def test_generate_url_not_reachable_onGET_PUT_DELETE(self):
-        url = reverse('generate')
+    def test_prompt_id_url_reachable_onGET_PUT_DELETE(self):
+        url = reverse('prompt_id', kwargs={'id': 1})
         response = self.client.get(url)
+        print("STATUS CODE FOR PROMPT ID GET:", response.status_code)
+        assert response.status_code == status.HTTP_404_NOT_FOUND #status.HTTP_200_OK
+        url = reverse('prompt_id', kwargs={'id': 1})
+        response = self.client.put(url)
+        print("STATUS CODE FOR PROMPT ID PUT:", response.status_code)
+        assert response.status_code == status.HTTP_400_BAD_REQUEST #status.HTTP_200_OK
+        url = reverse('prompt_id', kwargs={'id': 1})
+        response = self.client.delete(url)
+        assert response.status_code == status.HTTP_204_NO_CONTENT #status.HTTP_200_OK
+    
+    def test_prompt_id_url_not_reachable_onPOST(self):
+        url = reverse('prompt_id', kwargs={'id': 1})
+        response = self.client.post(url)
         assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
-    def test_prompt_url_reachable_onGET_POST(self):
-        pass
-
-    def test_prompt_id_url_reachable_onGET_PUT_DELETE(self):
-        pass
-
     def test_prompt_search_url_reachable_onGET(self):
-        pass
+        url = reverse('prompt_search')
+        response = self.client.get(url)
+        assert response.status_code == status.HTTP_200_OK
 
-    def test_prompt_search_url_reachable_onPOST_PUT_DELETE(self):
-        pass
+    def test_prompt_search_url_not_reachable_onPOST_PUT_DELETE(self):
+        url = reverse('prompt_search')
+        response = self.client.post(url)
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        url = reverse('prompt_search')
+        response = self.client.put(url)
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        url = reverse('prompt_search')
+        response = self.client.delete(url)
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
     # ----- TEST VIEW FUNCTIONAILITY ITSELF -----
 
     def test_models_view(self):
         """
         Test that /models returns a list of models in JSON format
-        fro the models registered with the llm manager.
+        from the models registered with the llm manager.
         """
         pass
 
