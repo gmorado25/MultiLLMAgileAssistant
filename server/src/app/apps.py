@@ -93,11 +93,11 @@ class AppConfig(AppConfig):
             LLMManager.registerModel(id="Test", model=MockInputModel, model_kwargs=test_args)
 
             llama_args = {
-                "model_path": "C:\\Users\\Ryan\\Desktop\\Dev. Projects\\LLama\\llama-2-7b-chat.Q5_K_M.gguf",
-                "n_gpu_layers": -1,     # number of layers to ofload to GPU -> -1 = use all available
-                "n_batch": 512,         # VRAM usage -> batch size
-                "max_tokens": 2000,     # token limit
-                "f16_kv": True          # ??? No idea but documentation says this MUST be true otherwise it will fail after a few runs
+                "model_path": "C:\\Users\\Ryan\\Desktop\\Dev. Projects\\LLama\\llama-2-13b-chat.Q5_K_M.gguf",
+                "n_gpu_layers": 50,     # num layers to offload to GPU      -> -1 = use all available
+                "n_ctx": 2048,          # Context size                      -> smaller = faster, but worse generation
+                "n_batch": 512,         # VRAM usage                        -> batch size
+                "n_thread": None,       # number of cpu threads             -> None = automatically determine 
             }
             LLMManager.registerModel(id="Llama", model=LLama, model_kwargs=llama_args)
 
