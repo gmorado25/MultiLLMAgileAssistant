@@ -10,6 +10,7 @@ from .llm_communication.test_model import MockInputModel
 from .llm_communication.open_ai_models import GPT
 from .llm_communication.google_models import ChatBison
 from .llm_communication.anthropic_models import Claude2
+from .llm_communication.meta_models import LLama
 
 class AppConfig(AppConfig):
 
@@ -85,11 +86,20 @@ class AppConfig(AppConfig):
             # "id" is the tag used to identify and query the model later
             # "model" is the class type to construct
             # "model_kwargs" is a dictionary of arguments to conctrust the class with
-            args = {
+            test_args = {
                 "model_name": "test-model",
                 "response": "Hello!"
             }
-            LLMManager.registerModel(id="Test", model=MockInputModel, model_kwargs=args)
+            LLMManager.registerModel(id="Test", model=MockInputModel, model_kwargs=test_args)
+
+            llama_args = {
+                "model_path": "C:\\Users\\Ryan\\Desktop\\Dev. Projects\\LLama\\llama-2-7b-chat.Q5_K_M.gguf",
+                "n_gpu_layers": 40,     # number of layers to run in GPU
+                "n_batch": 512,         # VRAM usage
+                "max_tokens": 2000,     # token limit
+                "f16_kv": True          # ??? No idea but documentation says this MUST be true otherwise it will fail after a few runs
+            }
+            LLMManager.registerModel(id="Llama", model=LLama, model_kwargs=llama_args)
 
             #LLMManager.registerModel(id="GPT3.5", model=GPT, model_kwargs={"model_name": "gpt-3.5-turbo"})
             #LLMManager.registerModel(id="Bard", model=ChatBison, model_kwargs={"model_name": "chat-bison"})
