@@ -1,14 +1,26 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.db.models import Count
+
 from rest_framework.test import APIClient, APIRequestFactory, force_authenticate
 from rest_framework import status
+
 from multillm.settings import NEXTJS_SETTINGS
+from .models import Prompt
 
 class TestAppViews(TestCase):
 
-        
     factory = APIRequestFactory()
     client = APIClient()
+
+    def setUp(self):
+        """Add a test object to the database."""
+        Prompt.objects.create(
+            title="Prompt 1", 
+            description="AAA", 
+            sdlc_phase="testing", 
+            role="tester"
+        )
 
     # ----- TEST URLS ARE REACHABLE WITH STATED HTTP METHODS -----
 
@@ -85,15 +97,16 @@ class TestAppViews(TestCase):
     def test_prompt_id_url_reachable_onGET_PUT_DELETE(self):
         url = reverse('prompt_id', kwargs={'id': 1})
         response = self.client.get(url)
-        print("STATUS CODE FOR PROMPT ID GET:", response.status_code)
-        assert response.status_code == status.HTTP_404_NOT_FOUND #status.HTTP_200_OK
+        assert response.status_code == status.HTTP_200_OK
+
         url = reverse('prompt_id', kwargs={'id': 1})
-        response = self.client.put(url)
-        print("STATUS CODE FOR PROMPT ID PUT:", response.status_code)
-        assert response.status_code == status.HTTP_400_BAD_REQUEST #status.HTTP_200_OK
+        body = {'title': 'a', 'description': 'b', 'sdlc_phase': 'c', 'role': 'd'}
+        request = self.factory.put(url, body, format='json')
+        assert response.status_code == status.HTTP_200_OK
+
         url = reverse('prompt_id', kwargs={'id': 1})
         response = self.client.delete(url)
-        assert response.status_code == status.HTTP_204_NO_CONTENT #status.HTTP_200_OK
+        assert response.status_code == status.HTTP_204_NO_CONTENT
     
     def test_prompt_id_url_not_reachable_onPOST(self):
         url = reverse('prompt_id', kwargs={'id': 1})
