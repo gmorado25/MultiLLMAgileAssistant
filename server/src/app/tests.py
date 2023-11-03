@@ -7,6 +7,7 @@ from rest_framework import status
 
 from multillm.settings import NEXTJS_SETTINGS
 from .models import Prompt
+from .views import *
 
 class TestAppViews(TestCase):
 
@@ -102,6 +103,8 @@ class TestAppViews(TestCase):
         url = reverse('prompt_id', kwargs={'id': 1})
         body = {'title': 'a', 'description': 'b', 'sdlc_phase': 'c', 'role': 'd'}
         request = self.factory.put(url, body, format='json')
+        force_authenticate(request)
+        response = prompt_detail(request, '1')
         assert response.status_code == status.HTTP_200_OK
 
         url = reverse('prompt_id', kwargs={'id': 1})
