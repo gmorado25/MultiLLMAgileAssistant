@@ -15,14 +15,17 @@
     "@mui/joy": "^5.0.0-beta.11",
     "@mui/material": "^5.14.14",
     "axios": "^1.6.0",
+    "jspdf": "^2.5.1",
     "next": "13.5.4",
     "react": "^18",
+    "react-csv": "^2.2.2",
     "react-dom": "^18",
     "zustand": "^4.4.4"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-csv": "^1.1.7",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
     "eslint": "^8",
