@@ -1,8 +1,5 @@
 from django.test import TestCase
-<<<<<<< Updated upstream
 
-# Create your tests here.
-=======
 from django.urls import reverse
 from rest_framework.test import APIClient, APIRequestFactory, force_authenticate
 from rest_framework import status
@@ -136,6 +133,4 @@ class TestAppViews(TestCase):
         pass
 
     # WRITE OTHER NEGATIVE TEST CASES FOR VIEWS
-    
-    
->>>>>>> Stashed changes
+
