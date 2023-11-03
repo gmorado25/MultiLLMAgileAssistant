@@ -1,6 +1,5 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.db.models import Count
 
 from rest_framework.test import APIClient, APIRequestFactory, force_authenticate
 from rest_framework import status
@@ -8,6 +7,8 @@ from rest_framework import status
 from multillm.settings import NEXTJS_SETTINGS
 from .models import Prompt
 from .views import *
+from .llm_communication import llm_manager
+from .llm_communication.test_model import MockInputModel
 
 class TestAppViews(TestCase):
 
@@ -133,7 +134,7 @@ class TestAppViews(TestCase):
         url = reverse('prompt_search')
         response = self.client.put(url)
         assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
-        
+
         url = reverse('prompt_search')
         response = self.client.delete(url)
         assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
@@ -145,7 +146,17 @@ class TestAppViews(TestCase):
         Test that /models returns a list of models in JSON format
         from the models registered with the llm manager.
         """
-        pass
+        # args = {
+        #     "model_name": "test-model",
+        #     "response": "Hello!"
+        # }
+        # llm_manager.registerModel(id="Test", model=MockInputModel, model_kwargs=args)
+
+        url = reverse('models')
+        request = self.factory.get(url)
+        response = llm_list(request)
+        response.render()
+        assert response.content == b'["Test"]'
 
     def test_generate_view(self):
         """
