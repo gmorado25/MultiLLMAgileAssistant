@@ -23,14 +23,14 @@ from app.request_handlers.prompt_attribute_search import PromptSearch
 
 urlpatterns = [
     path('', include('django_nextjs.urls')),
-    path('', views.syncNextJS),
-    path('dashboard/', views.syncNextJS),
-    path('admin/', admin.site.urls),
-    path('models/', views.llm_list),
-    path('generate/', LLMRequestHandler.as_view()),
-    path('prompts/', views.prompt_list),
-    path('prompts/<int:id>/', views.prompt_detail),
-    path('prompts/search/', PromptSearch.as_view())
+    path('', views.syncNextJS, name='homepage'),
+    path('dashboard/', views.syncNextJS, name='dashboard'),
+    path('admin/', admin.site.urls, name='admin'),
+    path('models/', views.llm_list, name='models'),
+    path('generate/', LLMRequestHandler.as_view(), name='generate'),
+    path('prompts/', views.prompt_list, name='prompt_list'),
+    path('prompts/<int:id>/', views.prompt_detail, name='prompt_id'),
+    path('prompts/search/', PromptSearch.as_view(), name='prompt_search')
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
