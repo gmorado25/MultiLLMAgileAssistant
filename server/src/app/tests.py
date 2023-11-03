@@ -47,20 +47,20 @@ class TestAppViews(TestCase):
         response = self.client.get(dashboard_url)
         assert response.status_code == status.HTTP_200_OK
         
-    # def test_models_url_reachable_onGET(self):
-    #     url = reverse('models')
-    #     response = self.client.get(url)                                     #failing
-    #     assert response.status_code == status.HTTP_200_OK
+    def test_models_url_reachable_onGET(self):
+        url = reverse('models')
+        response = self.client.get(url)
+        assert response.status_code == status.HTTP_200_OK
 
-    # def test_models_url_not_reachable_on_POST_PUT_DELETE(self):
-    #     url = reverse('models')
-    #     response = self.client.post(url)
-    #     assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
-    #     response = self.client.put(url)
+    def test_models_url_not_reachable_on_POST_PUT_DELETE(self):
+        url = reverse('models')
+        response = self.client.post(url)
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        response = self.client.put(url)
 
-    #     assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
-    #     response = self.client.delete(url)
-    #     assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        response = self.client.delete(url)
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
     # def test_generate_url_reachable_onPOST(self):
     #     url = reverse('generate')                                           #failing
@@ -78,19 +78,23 @@ class TestAppViews(TestCase):
     #     response = self.client.delete(url)
     #     assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
-    
-    # def test_prompt_url_reachable_onGET_POST(self):
-    #     url = reverse('prompt_list')
-    #     response = self.client.get(url)
-    #     assert response.status_code == status.HTTP_200_OK
-    #     url = reverse('prompt_list')
-    #     response = self.client.post(url)
-    #     assert response.status_code == status.HTTP_200_OK
+    def test_prompt_url_reachable_onGET_POST(self):
+        url = reverse('prompt_list')
+        response = self.client.get(url)
+        assert response.status_code == status.HTTP_200_OK
+
+        url = reverse('prompt_list')
+        body = {'title': 'a', 'description': 'b', 'sdlc_phase': 'c', 'role': 'd'}
+        request = self.factory.post(url, body, format='json')
+        force_authenticate(request)
+        response = prompt_list(request)
+        assert response.status_code == status.HTTP_201_CREATED
 
     def test_prompt_url_not_reachable_onPUT_DELETE(self):
         url = reverse('prompt_list')
         response = self.client.put(url)
         assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+
         url = reverse('prompt_list')
         response = self.client.delete(url)
         assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
@@ -125,9 +129,11 @@ class TestAppViews(TestCase):
         url = reverse('prompt_search')
         response = self.client.post(url)
         assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+
         url = reverse('prompt_search')
         response = self.client.put(url)
         assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        
         url = reverse('prompt_search')
         response = self.client.delete(url)
         assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
