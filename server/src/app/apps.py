@@ -94,8 +94,8 @@ class AppConfig(AppConfig):
 
             llama_args = {
                 "model_path": "C:\\Users\\Ryan\\Desktop\\Dev. Projects\\LLama\\llama-2-7b-chat.Q5_K_M.gguf",
-                "n_gpu_layers": 40,     # number of layers to run in GPU
-                "n_batch": 512,         # VRAM usage
+                "n_gpu_layers": -1,     # number of layers to ofload to GPU -> -1 = use all available
+                "n_batch": 512,         # VRAM usage -> batch size
                 "max_tokens": 2000,     # token limit
                 "f16_kv": True          # ??? No idea but documentation says this MUST be true otherwise it will fail after a few runs
             }

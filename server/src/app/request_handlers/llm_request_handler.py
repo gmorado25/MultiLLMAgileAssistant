@@ -54,6 +54,7 @@ class LLMRequestHandler(APIView):
         # query each llm and construct a list of dicts containing the responses
         results = llm_manager.query(system_prompt, user_input, models)
         response = self.__packageLLMResults(results)
+        print(response)
         return Response(response)
 
 # {
