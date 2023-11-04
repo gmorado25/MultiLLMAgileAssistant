@@ -1,0 +1,9 @@
+[
+        {
+            "id": "Test",
+            "class": "server.src.app.llm_communication.test_model.MockInputModel",
+            "args": {
+                "model_name": "test-model"
+            }
+        }
+]
