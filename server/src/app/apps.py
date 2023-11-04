@@ -37,25 +37,3 @@ class AppConfig(AppConfig):
 
         except Exception as error:
             print(error)
-
-        # {
-        #     "id": "Bard",
-        #     "class": "app.llm_communication.google_models.ChatBison",
-        #     "args": {
-        #         "model_name": "chat-bison"
-        #     }
-        # },
-        # {
-        #     "id": "Claude",
-        #     "class": "app.llm_communication.anthropic_models.Claude2",
-        #     "args": {
-        #         "model_name": "claude-2"
-        #     }
-        # },
-        # {
-        #     "id": "GPT3.5",
-        #     "class": "app.llm_communication.open_ai_models.GPT",
-        #     "args": {
-        #         "model_name": "gpt-3.5-turbo"
-        #     }
-        # },
