@@ -49,7 +49,10 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware'
 ]
 
-NEXTJS_ADDRESS = os.environ['NEXTJS_ADDR']               # What address the NextJS front end is running on.
+NEXTJS_ADDRESS = os.getenv('NEXTJS_ADDR', 'localhost')  # What address the NextJS front end is running on.
+NEXTJS_PORT = os.getenv('NEXTJS_PORT', '3000')          # What port the NextJS front end is running on.
+DJANGO_ADDRESS = os.getenv('DJANGO_ADDR', 'localhost')  # What address the Django server is running on.
+DJANGO_PORT = os.getenv('DJANGO_PORT', '8000')          # What port the Django server is running on.
 
 # =============================================================================
 #   Database Settings - database engine and ORM definitions.
@@ -91,17 +94,21 @@ if (DEBUG is True):
 else: 
     auth_config = CONFIG_DIR / 'keys-prod.json'
 
+# automatically set environment variables for the keys config
 with open(auth_config) as auth:
-    keys = json.load(auth)
-    SECRET_KEY = keys['MULTI_LLM_SECRET_KEY'] # Secret used by django server
+    auth_keys = json.load(auth)
+    for key, value in auth_keys.items():
+        os.environ[key] = value
+
+    SECRET_KEY = os.environ['MULTI_LLM_SECRET_KEY'] # Secret used by django server
 
 # What address(es) django is allowed to serve. Required outside of debug mode.
-ALLOWED_HOSTS = [NEXTJS_ADDRESS]
+ALLOWED_HOSTS = [DJANGO_ADDRESS, NEXTJS_ADDRESS]
 
 # CORS Settings - see https://pypi.org/project/django-cors-headers/
 CORS_ORIGIN_ALLOW_ALL = False                                   
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [NEXTJS_ADDRESS]
+CORS_ALLOWED_ORIGINS = ['http://' + NEXTJS_ADDRESS]
 
 # =============================================================================
 #   Miscellaneous django settings

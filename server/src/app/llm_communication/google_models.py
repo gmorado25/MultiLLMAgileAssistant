@@ -1,5 +1,5 @@
 from langchain.chat_models import ChatVertexAI
-from .abstract_endpoint import AbstractEndpoint
+from app.llm_communication.abstract_endpoint import AbstractEndpoint
 
 class ChatBison(AbstractEndpoint):
     

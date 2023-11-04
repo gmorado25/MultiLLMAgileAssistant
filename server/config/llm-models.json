@@ -1,7 +1,17 @@
 [
         {
+            "id": "Llama",
+            "class": "app.llm_communication.meta_models.Llama2",
+            "args": {
+                "model_path": "C:\\Users\\Ryan\\Desktop\\Dev. Projects\\Multi-LLM-Agile-Assistant\\server\\models\\llama-2-13b-chat.Q5_K_M.gguf",
+                "n_gpu_layers": 50,     
+                "n_ctx": 2048,          
+                "n_batch": 512         
+            }
+        },
+        {
             "id": "Test",
-            "class": "server.src.app.llm_communication.test_model.MockInputModel",
+            "class": "app.llm_communication.test_model.MockInputModel",
             "args": {
                 "model_name": "test-model"
             }

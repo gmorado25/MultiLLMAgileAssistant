@@ -1,7 +1,7 @@
 from langchain.llms import LlamaCpp
-from .abstract_endpoint import AbstractEndpoint
+from app.llm_communication.abstract_endpoint import AbstractEndpoint
 
-class LLama(AbstractEndpoint):
+class Llama2(AbstractEndpoint):
 
     def __init__(self, **kwargs) -> None:
         super().__init__(LlamaCpp(**kwargs))
