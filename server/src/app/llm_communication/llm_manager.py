@@ -88,6 +88,9 @@ def query(prompt: str, dataset: str, models: list[str]) -> list[LLMResponse]:
     responses: list[LLMResponse] = []
     threads: list[ReturningThread] = []
 
+    if (models is None):
+        return[LLMResponse("Error", "No models are registered.")]
+    
     for model in models:
         t = ReturningThread(target=_tryQuery, args=(prompt, dataset, model))
         threads.append(t)
