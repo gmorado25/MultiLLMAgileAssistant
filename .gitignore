@@ -1,14 +1,15 @@
 # !!!!! SECURITY - IMPORTANT !!!!! ignore directory to store auth keys and credentials
 server/config/*
+
 !server/config/keys-dev.json
 !server/config/requirements.txt
 !server/config/llm-models.json
 
 # Environment directories
-server/.project_env
 .vscode
-testing/*
-models/*
+testing/
+server/.project_env
+server/models
 
 # Byte-compiled / optimized / DLL files
 **/__pycache__
