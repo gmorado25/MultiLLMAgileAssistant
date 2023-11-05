@@ -2,8 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
 
-from ..llm_communication import llm_manager
-from ..llm_communication.llm_response import LLMResponse
+from multi_llm.util import llm_manager
+from multi_llm.util.llm_response import LLMResponse
 
 """ -----------------------------------------------------------------------
 Summary:
@@ -35,7 +35,7 @@ Summary:
         ...
     ]
 ----------------------------------------------------------------------- """ 
-class LLMRequestHandler(APIView):
+class LLMQuery(APIView):
 
     def __packageLLMResults(self, results: list[LLMResponse]) -> list[dict[str, str]]:
         responses = []
@@ -54,11 +54,4 @@ class LLMRequestHandler(APIView):
         # query each llm and construct a list of dicts containing the responses
         results = llm_manager.query(system_prompt, user_input, models)
         response = self.__packageLLMResults(results)
-        print(response)
         return Response(response)
-
-# {
-#     "models": ["Test", "GPT3.5", "GPT4", "Llama", "Bard", "Claude", "Test"],
-#     "prompt": "You are a helpful assistant who solves math problems. Write the following equation using algebraic symbols then show the steps to solve the problem:",
-#     "data": "x^3 + 7 = 12"
-# }

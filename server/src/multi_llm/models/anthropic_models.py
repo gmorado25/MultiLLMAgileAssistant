@@ -1,5 +1,5 @@
 from langchain.chat_models import ChatAnthropic
-from app.llm_communication.abstract_endpoint import AbstractEndpoint
+from multi_llm.models.abstract_endpoint import AbstractEndpoint
 
 class Claude2(AbstractEndpoint):
 

@@ -2,5 +2,6 @@
     "MULTI_LLM_SECRET_KEY": "Mutli-LLM Project key",
     "OPENAI_API_KEY": "OpenAI API key",
     "GOOGLE_APPLICATION_CREDENTIALS": "Path to Google Cloud Auth Cert",
-    "ANTHROPIC_API_KEY": "Anthropic API key"
+    "ANTHROPIC_API_KEY": "Anthropic API key",
+    "JIRA_API_TOKEN": "Jira Integration API key"
 }

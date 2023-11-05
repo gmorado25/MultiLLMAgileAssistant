@@ -3,7 +3,6 @@ server/config/*
 
 !server/config/keys-dev.json
 !server/config/requirements.txt
-!server/config/llm-models.json
 
 # Environment directories
 .vscode
@@ -16,4 +15,4 @@ server/models
 *.py[cod]
 
 # Database specific files
-server/src/db.sqlite3
+**/db.sqlite3

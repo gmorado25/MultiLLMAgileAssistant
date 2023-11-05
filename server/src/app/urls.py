@@ -1,5 +1,5 @@
 """
-URL configuration for multillm project.
+URL configuration for the multillm project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -17,20 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework.urlpatterns import format_suffix_patterns
-from app import views
-from app.request_handlers.llm_request_handler import LLMRequestHandler
-from app.request_handlers.prompt_attribute_search import PromptSearch
 
 urlpatterns = [
     path('', include('django_nextjs.urls')),
-    path('', views.syncNextJS),
-    path('dashboard/', views.syncNextJS),
+    path('', include('prompt_library.urls')),
+    path('', include('multi_llm.urls')),
     path('admin/', admin.site.urls),
-    path('models/', views.llm_list),
-    path('generate/', LLMRequestHandler.as_view()),
-    path('prompts/', views.prompt_list),
-    path('prompts/<int:id>/', views.prompt_detail),
-    path('prompts/search/', PromptSearch.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

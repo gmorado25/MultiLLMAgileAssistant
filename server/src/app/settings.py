@@ -17,11 +17,15 @@ from pathlib import Path
 #
 # =============================================================================
 
-BASE_DIR = Path(__file__).resolve().parent.parent   # Build paths inside project like this: BASE_DIR / 'subdir'.
-CONFIG_DIR = BASE_DIR.parent / 'config'
+HOST_ADDRESS = os.getenv('ADDRESS', '127.0.0.1')
+HOST_PORT = os.getenv('PORT', '3000')    
 
-ROOT_URLCONF = 'multillm.urls'                      # module that contains root project url mapping
-WSGI_APPLICATION = 'multillm.wsgi.application'      # module that contains application deployment code
+# Build paths inside project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+CONFIG_DIR = BASE_DIR / 'server/config'
+
+ROOT_URLCONF = 'app.urls'                      # module that contains root project url mapping
+WSGI_APPLICATION = 'app.wsgi.application'      # module that contains application deployment code
 
 # Application definition - What modules should be loaded when starting the server.
 INSTALLED_APPS = [
@@ -34,7 +38,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'django_nextjs',
-    'app'
+    'prompt_library'
 ]
 
 # Middleware definition - What middleware features should be loaded when starting the server.
@@ -47,12 +51,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware'
-]
-
-NEXTJS_ADDRESS = os.getenv('NEXTJS_ADDR', 'localhost')  # What address the NextJS front end is running on.
-NEXTJS_PORT = os.getenv('NEXTJS_PORT', '3000')          # What port the NextJS front end is running on.
-DJANGO_ADDRESS = os.getenv('DJANGO_ADDR', 'localhost')  # What address the Django server is running on.
-DJANGO_PORT = os.getenv('DJANGO_PORT', '8000')          # What port the Django server is running on.
+]          
 
 # =============================================================================
 #   Database Settings - database engine and ORM definitions.
@@ -62,7 +61,7 @@ DJANGO_PORT = os.getenv('DJANGO_PORT', '8000')          # What port the Django s
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'server/db.sqlite3',
     }
 }
 
@@ -82,33 +81,34 @@ USE_TZ = True
 #
 #   See - https://docs.djangoproject.com/en/4.2/topics/security/
 #         https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+#
+#   Never deploy with debug = true in production.
+#   Keep your authentication and project keys a secret 
+#       - DO NOT commit to source control.
+#   The file 'keys-dev.json' is a dummy file provided for test and development 
+#   configurations.
 # =============================================================================
 
-# Never deploy with debug = true in production
-DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() == 'true'
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-# Keep your authentication and project keys a secret - DO NOT commit to source control
-# The file 'keys-dev.json' is a dummy file provided for test and development configurations
 if (DEBUG is True):
     auth_config = CONFIG_DIR / 'keys-dev.json' 
 else: 
     auth_config = CONFIG_DIR / 'keys-prod.json'
 
-# automatically set environment variables for the keys config
 with open(auth_config) as auth:
     auth_keys = json.load(auth)
     for key, value in auth_keys.items():
         os.environ[key] = value
 
-    SECRET_KEY = os.environ['MULTI_LLM_SECRET_KEY'] # Secret used by django server
+    SECRET_KEY = os.environ['MULTI_LLM_SECRET_KEY']
 
-# What address(es) django is allowed to serve. Required outside of debug mode.
-ALLOWED_HOSTS = [DJANGO_ADDRESS, NEXTJS_ADDRESS]
+ALLOWED_HOSTS = [HOST_ADDRESS]
 
 # CORS Settings - see https://pypi.org/project/django-cors-headers/
 CORS_ORIGIN_ALLOW_ALL = False                                   
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ['http://' + NEXTJS_ADDRESS]
+CORS_ALLOWED_ORIGIN_REGEXES = []
 
 # =============================================================================
 #   Miscellaneous django settings
@@ -132,8 +132,8 @@ TEMPLATES = [
     },
 ]
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+# Static files (CSS, JavaScript, Images), point to NextJS build folder
+# See - https://docs.djangoproject.com/en/4.2/howto/static-files/
 STATIC_URL = 'static/'
 
 # Password validation

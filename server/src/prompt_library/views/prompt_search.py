@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework import status
 
-from ..models import Prompt
-from ..serializers import PromptSerializer
+from prompt_library.models import Prompt
+from prompt_library.serializers import PromptSerializer
 
 class PromptSearch(APIView):
 
@@ -13,7 +13,10 @@ class PromptSearch(APIView):
         phase = request.query_params.get("sdlc_phase") or ""
         
         try:
-            prompts = Prompt.objects.filter(role__icontains=role, sdlc_phase__icontains=phase)
+            prompts = Prompt.objects.filter(
+                role__icontains=role, 
+                sdlc_phase__icontains=phase
+            )
         except Prompt.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         

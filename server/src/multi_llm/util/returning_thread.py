@@ -1,5 +1,4 @@
 import threading
-import sys
 from typing import Any
 
 """ -----------------------------------------------------------------------
