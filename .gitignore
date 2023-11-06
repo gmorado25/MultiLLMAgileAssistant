@@ -4,10 +4,10 @@ server/config/*
 !server/config/requirements.txt
 
 # Environment directories
-server/.project_env
+server/.project_env/
+server/models/
 .vscode
 testing/*
-models/*
 
 # Byte-compiled / optimized / DLL files
 **/__pycache__
