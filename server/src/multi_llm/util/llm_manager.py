@@ -37,9 +37,8 @@ def _tryQuery(prompt: str, dataset: str, model: str) -> LLMResponse:
         msg = f"Error: cannot query LLM {model}. This can occur if:\n" + \
                 "- The model has not been setup properly.\n" + \
                 "- Authentication failed.\n" + \
-                "- It was mispelled in the request or configuration.\n\n-->" + \
+                "- It was mispelled in the request or configuration.\n\n-->"
         print(msg, error, "\n\n")
-        
         return LLMResponse(model, "An error has occured.")
 
 def registerModel(
@@ -91,6 +90,9 @@ def query(prompt: str, dataset: str, models: list[str]) -> list[LLMResponse]:
     responses: list[LLMResponse] = []
     threads: list[ReturningThread] = []
 
+    if (models is None):
+        return[LLMResponse("Error", "No models are registered.")]
+    
     for model in models:
         t = ReturningThread(target=_tryQuery, args=(prompt, dataset, model))
         threads.append(t)

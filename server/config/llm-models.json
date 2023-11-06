@@ -1,7 +1,7 @@
 [
     {
         "id": "Llama",
-        "class": "--multi_llm.models.meta_models.Llama2",
+        "class": "multi_llm.models.meta_models.Llama2",
         "args": {
             "model_path": "C:\\Users\\Ryan\\Desktop\\Dev. Projects\\Multi-LLM-Agile-Assistant\\server\\models\\llama-2-7b-chat.Q5_K_M.gguf",
             "n_gpu_layers": 50,     
@@ -11,7 +11,7 @@
     },
     {
         "id": "Bard",
-        "class": "--multi_llm.models.google_models.ChatBison",
+        "class": "multi_llm.models.google_models.ChatBison",
         "args": {
             "model_name": "chat-bison"
         }
@@ -25,7 +25,7 @@
     },
     {
         "id": "GPT3.5",
-        "class": "--multi_llm.models.open_ai_models.GPT",
+        "class": "multi_llm.models.open_ai_models.GPT",
         "args": {
             "model_name": "gpt-3.5-turbo"
         }
