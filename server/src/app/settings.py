@@ -18,7 +18,7 @@ from pathlib import Path
 # =============================================================================
 
 HOST_ADDRESS = os.getenv('ADDRESS', '127.0.0.1')
-HOST_PORT = os.getenv('PORT', '3000')    
+HOST_PORT = os.getenv('PORT', '8000')    
 
 # Build paths inside project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'django_nextjs',
-    'prompt_library'
+    'prompt_library',
+    'multi_llm'
 ]
 
 # Middleware definition - What middleware features should be loaded when starting the server.

@@ -1,7 +1,7 @@
 [
     {
         "id": "Llama",
-        "class": "--app.llm_communication.meta_models.Llama2",
+        "class": "--multi_llm.models.meta_models.Llama2",
         "args": {
             "model_path": "C:\\Users\\Ryan\\Desktop\\Dev. Projects\\Multi-LLM-Agile-Assistant\\server\\models\\llama-2-7b-chat.Q5_K_M.gguf",
             "n_gpu_layers": 50,     
@@ -11,28 +11,28 @@
     },
     {
         "id": "Bard",
-        "class": "--app.llm_communication.google_models.ChatBison",
+        "class": "--multi_llm.models.google_models.ChatBison",
         "args": {
             "model_name": "chat-bison"
         }
     },
     {
         "id": "Claude",
-        "class": "--app.llm_communication.anthropic_models.Claude2",
+        "class": "--multi_llm.models.anthropic_models.Claude2",
         "args": {
             "model_name": "claude-2"
         }
     },
     {
         "id": "GPT3.5",
-        "class": "--app.llm_communication.open_ai_models.GPT",
+        "class": "--multi_llm.models.open_ai_models.GPT",
         "args": {
             "model_name": "gpt-3.5-turbo"
         }
     },
     {
         "id": "Test",
-        "class": "--app.llm_communication.test_model.MockInputModel",
+        "class": "multi_llm.models.test_model.MockInputModel",
         "args": {
             "model_name": "test-model"
         }
