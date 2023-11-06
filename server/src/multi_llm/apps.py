@@ -8,7 +8,7 @@ from multi_llm.models.abstract_endpoint import AbstractEndpoint
 class AppConfig(AppConfig):
 
     name = 'multi_llm'
-    models_config = 'config/llm-models.json'
+    models_config = 'config/models.json'
     
     def __registerModel(self, model: dict[str, Any]) -> None:
         id = model['id']
