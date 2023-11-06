@@ -39,7 +39,7 @@ def _tryQuery(prompt: str, dataset: str, model: str) -> LLMResponse:
                 "- Authentication failed.\n" + \
                 "- It was mispelled in the request or configuration.\n\n-->"
         print(msg, error, "\n\n")
-        return LLMResponse(model, "An error has occured.")
+        return LLMResponse(model, "An error has occurred.")
 
 def registerModel(
     id: str, model: 
