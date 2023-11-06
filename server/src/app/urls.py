@@ -1,3 +1,7 @@
+from django.http import HttpRequest
+from rest_framework.response import Response
+from django_nextjs.render import render_nextjs_page_sync
+
 """
 URL configuration for the multillm project.
 
@@ -18,8 +22,14 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework.urlpatterns import format_suffix_patterns
 
+
+def syncNextJS(request: HttpRequest) -> Response:
+    return render_nextjs_page_sync(request)\
+    
 urlpatterns = [
     path('', include('django_nextjs.urls')),
+    path('', syncNextJS, name='homepage'),
+    path('dashboard/', syncNextJS, name='dashboard'),
     path('', include('prompt_library.urls')),
     path('', include('multi_llm.urls')),
     path('admin/', admin.site.urls),
