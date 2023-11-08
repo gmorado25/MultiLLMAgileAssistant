@@ -3,5 +3,11 @@
        { "OPENAI_API_KEY": "TEST" },
        { "GOOGLE_APPLICATION_CREDENTIALS": "PATH TO GOOGLE GCP AUTH CERT" },
        { "ANTHROPIC_API_KEY": "TEST" }
+    ],
+    "jira_tokens": [
+        {
+            "site": "https://multi-llm.atlassian.net/",
+            "token": "token"
+        }
     ]
 }

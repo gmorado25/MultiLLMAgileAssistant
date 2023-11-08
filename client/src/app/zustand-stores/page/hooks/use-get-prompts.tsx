@@ -1,18 +1,11 @@
 "use client";
 import axios from "axios";
-import { setPrompts, getCookie } from "../store/LLM-store";
+import { setPrompts } from "../store/LLM-store";
+import { getCSRFHeader } from "../../../utils/cookies"
 
 const useGetPrompts = async () => {
   try {
-    const csrftoken = getCookie('csrftoken');
-    // make an API call the the /generate endpoint, pass in the prompts, list of models to query, etc.
-    const config = {
-      headers: {
-          'content-type': 'application/json',
-          'X-CSRFToken': csrftoken,
-      }
-    }
-    axios.get("/prompts.json", config).then((response: any) => {
+    axios.get("/prompts.json", getCSRFHeader()).then((response: any) => {
       const data = response.data;
       console.log(response)
       setPrompts(data);
