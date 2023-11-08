@@ -2,3 +2,8 @@
     padding: 20px;
     white-space: pre-wrap;
 }
+
+.Buttons {
+    display: flex;
+    justify-content: space-between;
+}
