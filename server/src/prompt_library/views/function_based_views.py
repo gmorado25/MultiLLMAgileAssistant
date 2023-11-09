@@ -1,13 +1,13 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.request import Request
 from rest_framework import status
 
-from django.http import HttpRequest
 from prompt_library.models import Prompt
 from prompt_library.serializers import PromptSerializer
 
 @api_view(['GET','POST'])
-def prompt_list(request: HttpRequest, format=None) -> Response:
+def prompt_list(request: Request, format=None) -> Response:
 
     if request.method == 'GET':
         prompts = Prompt.objects.all()
@@ -23,7 +23,7 @@ def prompt_list(request: HttpRequest, format=None) -> Response:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
 @api_view(['GET', 'PUT', 'DELETE'])
-def prompt_detail(request: HttpRequest, id: int, format=None) -> Response:
+def prompt_detail(request: Request, id: int, format=None) -> Response:
 
     try:
         prompt = Prompt.objects.get(pk=id)

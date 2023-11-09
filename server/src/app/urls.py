@@ -30,9 +30,10 @@ urlpatterns = [
     path('', include('django_nextjs.urls')),
     path('', syncNextJS, name='homepage'),
     path('dashboard/', syncNextJS, name='dashboard'),
+    path('admin/', admin.site.urls),
     path('', include('prompt_library.urls')),
     path('', include('multi_llm.urls')),
-    path('admin/', admin.site.urls),
+    path('', include('jira.urls'))
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

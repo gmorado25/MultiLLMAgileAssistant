@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_nextjs',
     'prompt_library',
-    'multi_llm'
+    'multi_llm',
+    'jira'
 ]
 
 # Middleware definition - What middleware features should be loaded when starting the server.
