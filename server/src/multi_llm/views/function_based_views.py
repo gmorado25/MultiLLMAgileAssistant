@@ -6,5 +6,5 @@ from django.http import HttpRequest
 from multi_llm.util import llm_manager
 
 @api_view(['GET'])
-def llm_list(request: HttpRequest) -> Response:
+def models(request: HttpRequest) -> Response:
     return Response(llm_manager.getModels())

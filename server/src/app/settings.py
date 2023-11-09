@@ -98,9 +98,11 @@ else:
     auth_config = CONFIG_DIR / 'keys-prod.json'
 
 with open(auth_config) as auth:
+    entry: dict[str, str]
     auth_keys = json.load(auth)
-    for key, value in auth_keys.items():
-        os.environ[key] = value
+    for entry in auth_keys['llm_auth_keys']:
+        for key, value in entry.items():
+            os.environ[key] = value
 
     SECRET_KEY = os.environ['MULTI_LLM_SECRET_KEY']
 
@@ -109,7 +111,7 @@ ALLOWED_HOSTS = [HOST_ADDRESS]
 # CORS Settings - see https://pypi.org/project/django-cors-headers/
 CORS_ORIGIN_ALLOW_ALL = False                                   
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGIN_REGEXES = []
+CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:3000']
 
 # =============================================================================
 #   Miscellaneous django settings
