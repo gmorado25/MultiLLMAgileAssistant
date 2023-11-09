@@ -1,5 +1,5 @@
 from langchain.llms.fake import FakeListLLM
-from .abstract_endpoint import AbstractEndpoint
+from multi_llm.models.abstract_endpoint import AbstractEndpoint
 
 class MockInputModel(AbstractEndpoint):
 

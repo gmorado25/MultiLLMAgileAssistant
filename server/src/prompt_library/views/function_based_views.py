@@ -1,19 +1,10 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from django_nextjs.render import render_nextjs_page_sync
 
 from django.http import HttpRequest
-from .models import Prompt
-from .serializers import PromptSerializer
-from .llm_communication import llm_manager
-
-def syncNextJS(request: HttpRequest) -> Response:
-    return render_nextjs_page_sync(request)
-
-@api_view(['GET'])
-def llm_list(request: HttpRequest) -> Response:
-    return Response(llm_manager.getModels())
+from prompt_library.models import Prompt
+from prompt_library.serializers import PromptSerializer
 
 @api_view(['GET','POST'])
 def prompt_list(request: HttpRequest, format=None) -> Response:

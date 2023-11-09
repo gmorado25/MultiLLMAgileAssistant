@@ -1,5 +1,9 @@
+from django.http import HttpRequest
+from rest_framework.response import Response
+from django_nextjs.render import render_nextjs_page_sync
+
 """
-URL configuration for multillm project.
+URL configuration for the multillm project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -17,20 +21,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework.urlpatterns import format_suffix_patterns
-from app import views
-from app.request_handlers.llm_request_handler import LLMRequestHandler
-from app.request_handlers.prompt_attribute_search import PromptSearch
 
+
+def syncNextJS(request: HttpRequest) -> Response:
+    return render_nextjs_page_sync(request)\
+    
 urlpatterns = [
     path('', include('django_nextjs.urls')),
-    path('', views.syncNextJS, name='homepage'),
-    path('dashboard/', views.syncNextJS, name='dashboard'),
-    path('admin/', admin.site.urls, name='admin'),
-    path('models/', views.llm_list, name='models'),
-    path('generate/', LLMRequestHandler.as_view(), name='generate'),
-    path('prompts/', views.prompt_list, name='prompt_list'),
-    path('prompts/<int:id>/', views.prompt_detail, name='prompt_id'),
-    path('prompts/search/', PromptSearch.as_view(), name='prompt_search')
+    path('', syncNextJS, name='homepage'),
+    path('dashboard/', syncNextJS, name='dashboard'),
+    path('', include('prompt_library.urls')),
+    path('', include('multi_llm.urls')),
+    path('admin/', admin.site.urls),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

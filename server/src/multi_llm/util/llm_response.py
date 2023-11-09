@@ -1,4 +1,3 @@
-
 class LLMResponse:
     _model: str
     _response: str
