@@ -6,6 +6,8 @@ from rest_framework import status
 
 from multi_llm.views.llm_query import LLMQuery
 from multi_llm.views.function_based_views import models
+from multi_llm.util import llm_manager
+from multi_llm.models.test_model import MockInputModel
 
 class TestMultiLLMViews(TestCase):
 
@@ -52,17 +54,18 @@ class TestMultiLLMViews(TestCase):
         Test that /models returns a list of models in JSON format
         from the models registered with the llm manager.
         """
-        # args = {
-        #     "model_name": "test-model",
-        #     "response": "Hello!"
-        # }
-        # llm_manager.registerModel(id="Test", model=MockInputModel, model_kwargs=args)
+        args = {
+            "model_name": "test-model",
+            "response": "Hello!"
+        }
+
+        llm_manager.registerModel(id="Test2", model=MockInputModel, model_kwargs=args)
 
         url = reverse('models')
         request = self.factory.get(url)
         response = models(request)
         response.render()
-        assert response.content == b'["Test"]'
+        assert b'"Test2"' in response.content
 
     def test_generate_view(self):
         """
@@ -70,6 +73,7 @@ class TestMultiLLMViews(TestCase):
         the requested llm(s), where the request body is a JSON
         object like:
 
+        INPUT
         {
             "models": ["Model_1", "Model_2", "Model_3"],
             "prompt": "Put the system prompt here",
@@ -78,6 +82,7 @@ class TestMultiLLMViews(TestCase):
 
         And the generated response should be another JSON object like:
 
+        OUTPUT
         [
             {
                 "model": "Model1",
