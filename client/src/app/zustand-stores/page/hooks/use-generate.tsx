@@ -1,52 +1,48 @@
 "use client";
 import * as React from "react";
-import { setOutputData, getCookie } from "../store/LLM-store";
+import {
+  setOutputData,
+  getCookie,
+  useLLMStore,
+  setIsGeneratedLoading,
+} from "../store/LLM-store";
 import { setPrompts } from "../store/LLM-store";
-const axios = require('axios').default;
+const axios = require("axios").default;
 
 const useGenerate = async () => {
-  try {
-    const csrftoken = getCookie('csrftoken');
+  const prompt = useLLMStore.use.selectedPrompt();
+  const data = useLLMStore.use.inputData();
+  const models = useLLMStore.use.selectedModels();
 
-    const body = JSON.stringify({
-      models: ["GPT3.5", "Bard", "Claude", "Test"],
-      prompt:
-        "You are a helpful assistant who solves math problems. Write the following equation using algebraic symbols then show the steps to solve the problem:",
-      data: "x^3 + 7 = 12",
-    })
+  const generate = () => {
+    try {
+      setIsGeneratedLoading(true);
+      const csrftoken = getCookie("csrftoken");
 
-    // make an API call the the /generate endpoint, pass in the prompts, list of models to query, etc.
-    const config = {
-      headers: {
-          'content-type': 'application/json',
-          'X-CSRFToken': csrftoken,
-      }
+      const body = JSON.stringify({
+        models: models,
+        prompt: prompt.description,
+        data: data,
+      });
+
+      // make an API call the the /generate endpoint, pass in the prompts, list of models to query, etc.
+      const config = {
+        headers: {
+          "content-type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+      };
+      axios.post("/generate.json", body, config).then((response: any) => {
+        const data = response.data;
+
+        setOutputData(data);
+        setIsGeneratedLoading(false);
+      });
+    } catch (err) {
+      console.log(err);
     }
-    axios.post("/generate.json", body, config).then((response: any) => {
-      const data = response.data;
-      console.log(response)
-      setOutputData(data);
-    });
-
-    // const res = await fetch("http://localhost:8000/generate/", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     models: ["GPT3.5", "Bard", "Claude", "Test"],
-    //     prompt:
-    //       "You are a helpful assistant who solves math problems. Write the following equation using algebraic symbols then show the steps to solve the problem:",
-    //     data: "x^3 + 7 = 12",
-    //   }),
-    //   headers: {
-    //     "Content-type": "application/json; charset=UTF-8",
-    //     'X-CSRFToken': csrftoken
-    //   },
-    // });
-
-    // parse the returned json
-  } catch (err) {
-    console.log(err);
-  }
-  return;
+  };
+  return generate;
 };
 
 export default useGenerate;

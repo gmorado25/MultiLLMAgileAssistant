@@ -1,10 +1,10 @@
 "use client";
 import axios from "axios";
-import { setPrompts, getCookie } from "../store/LLM-store";
+import { setPrompts, setModels, getCookie } from "../store/LLM-store";
 import { useEffect } from "react";
 
 // Custom hook with useEffect
-const useGetPrompts = () => {
+const useGetModels = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -15,10 +15,9 @@ const useGetPrompts = () => {
             "X-CSRFToken": csrftoken,
           },
         };
-        const response = await axios.get("/prompts.json", config);
+        const response = await axios.get("/models", config);
         const data = response.data;
-
-        setPrompts(data);
+        setModels(data);
       } catch (err) {
         console.log(err);
       }
@@ -28,4 +27,4 @@ const useGetPrompts = () => {
   }, []); // Empty dependencies array ensures this effect runs once on mount
 };
 
-export default useGetPrompts;
+export default useGetModels;

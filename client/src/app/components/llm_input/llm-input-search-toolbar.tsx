@@ -1,21 +1,61 @@
 "use client";
 import React, { FC } from "react";
-import { Divider } from "@mui/material";
+import { Divider, FormControl, MenuItem, Select } from "@mui/material";
 import Button from "@mui/joy/Button";
 import Textarea from "@mui/joy/Textarea";
-import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
-
+import * as yup from "yup";
 import PromptModal from "./prompt-modal";
-
 import {
-  setOutputData,
-  useLLMStore,
+  setInputData,
+  setSelectedModels,
 } from "../../zustand-stores/page/store/LLM-store";
-import UseGenerate from "@/app/zustand-stores/page/hooks/use-generate";
 import useGenerate from "@/app/zustand-stores/page/hooks/use-generate";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import useGetModels from "@/app/zustand-stores/page/hooks/use-get-models";
+import JiraConnect from "../jira/jira-connect-modal";
+
+const names = ["ChatGPT", "Claude", "Llama", "Perplexity", "Test"];
+
+type InputSearchFormSchema = {
+  format?: string;
+  modifier?: string;
+  language?: string;
+  models: string[];
+};
+
+const initialInputSearchFormValues: InputSearchFormSchema = {
+  format: "",
+  modifier: "",
+  language: "",
+  models: [],
+};
 
 const LLMSearchToolbar: FC = () => {
+  // Lazy Loading
+  useGetModels();
+
+  const generate = useGenerate();
+
+  const GENERATE_REQUEST_FORM_SCHEMA = yup.object().shape({
+    format: yup.string().notRequired(),
+    modifier: yup.string().notRequired(),
+    language: yup.string().notRequired(),
+    models: yup.array().of(yup.string()),
+  });
+
+  const { register, control, getValues } = useForm({
+    mode: "onSubmit",
+    resolver: yupResolver(GENERATE_REQUEST_FORM_SCHEMA),
+    defaultValues: { ...initialInputSearchFormValues },
+  });
+
+  // Event handler using the generate function from the hook
+  const handleSubmit = async () => {
+    (await generate)();
+  };
+
   return (
     <div className="w-full p-4">
       <form className="flex flex-col w-full pr-8 space-y-4 border-Primary rounded-lg xl:pr-0 py-4 ">
@@ -23,34 +63,81 @@ const LLMSearchToolbar: FC = () => {
         <div className="p-4">
           <div className="flex flex-row">
             <PromptModal />
-            <Select className=" ml-4 mr-4" placeholder="Output Format">
-              <Option value="graph">Graph</Option>
-              <Option value="table">Table</Option>
-              <Option value="text">Text</Option>
-            </Select>
-            <Select className="mr-4" placeholder="Output Modifier">
-              <Option value="dog">1</Option>
-              <Option value="cat">2</Option>
-            </Select>
-            <Select className="mr-4" placeholder="Coding Language">
-              <Option value="C++">C++</Option>
-              <Option value="Go">Go</Option>
-              <Option value="Java">Java</Option>
-              <Option value="Javascript">Javascript</Option>
-              <Option value="Python">Python</Option>
-            </Select>
-            <Select className="mr-4" placeholder="Select up to 3 LLM's">
-              <Option value="bard">Bard</Option>
-              <Option value="chatGpt">ChatGPT</Option>
-              <Option value="claude">Claude</Option>
-              <Option value="java">Llama</Option>
-              <Option value="perplexity">Perplexity</Option>
-            </Select>
+            {/* <select
+              className=" ml-4 mr-4"
+              placeholder="Output Format"
+              {...register("format")}
+            >
+              <option value="graph">Graph</option>
+              <option value="table">Table</option>
+              <option value="text">Text</option>
+            </select>
+            <select
+              className="mr-4"
+              placeholder="Output Modifier"
+              {...register("modifier")}
+            >
+              <option value="dog">1</option>
+              <option value="cat">2</option>
+            </select>
+            <select
+              className="mr-4"
+              placeholder="Coding Language"
+              {...register("language")}
+            >
+              <option value="C++">C++</option>
+              <option value="Go">Go</option>
+              <option value="Java">Java</option>
+              <option value="Javascript">Javascript</option>
+              <option value="Python">Python</option>
+            </select> */}
+            <Controller
+              name="models"
+              control={control}
+              render={({ field }) => (
+                <FormControl sx={{ m: 1, width: 300 }}>
+                  <Select
+                    labelId="multiple-name-label"
+                    id="multiple-name"
+                    multiple
+                    value={field.value}
+                    onChange={(event) => {
+                      // This will pass the selected values to React Hook Form's controller
+                      const selected = event.target.value;
+                      // Ensure only string[] is passed, even if empty
+                      const validModels = Array.isArray(selected)
+                        ? selected.filter(
+                            (model): model is string =>
+                              typeof model === "string"
+                          )
+                        : [];
+                      // Update the selected models in the store
+                      setSelectedModels(validModels);
+                      // Update the form state
+                      field.onChange(validModels);
+                    }}
+                    renderValue={(selected) => selected.join(", ")}
+                  >
+                    {names.map((name) => (
+                      <MenuItem key={name} value={name}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+            />
+            <div className="flex justify-end items-end">
+              <JiraConnect />
+            </div>
           </div>
 
           <Textarea
             className="overflow-auto h-60"
             placeholder="Input text here..."
+            onChange={(value) => {
+              setInputData(value.target.value);
+            }}
           ></Textarea>
           <div className="flex items-end justify-end py-4">
             <div className="px-4">
@@ -60,7 +147,7 @@ const LLMSearchToolbar: FC = () => {
             </div>
             <Button
               // eslint-disable-next-line react-hooks/rules-of-hooks
-              onClick={() => useGenerate()}
+              onClick={handleSubmit}
               className=""
               disabled={false}
               variant="solid"
