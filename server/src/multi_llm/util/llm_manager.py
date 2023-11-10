@@ -62,6 +62,13 @@ def registerModel(
     else:
         raise Exception(f"Model {id} is already registered.")
 
+def clearModels() -> None:
+    """ -----------------------------------------------------------------------
+    Summary:
+        Clears all models registered in the system.
+    ----------------------------------------------------------------------- """ 
+    _instances.clear()
+
 def getModels() -> list[str]:
     """ -----------------------------------------------------------------------
     Summary:

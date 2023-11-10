@@ -58,18 +58,19 @@ class TestMultiLLMViews(TestCase):
         Test that /models returns a list of models in JSON format
         from the models registered with the llm manager.
         """
+        llm_manager.clearModels()
         args = {
             "model_name": "test-model",
             "response": "Hello!"
         }
-
-        llm_manager.registerModel(id="Test2", model=MockInputModel, model_kwargs=args)
+        llm_manager.registerModel(id="Generate Test", model=MockInputModel, model_kwargs=args)
 
         url = reverse('models')
         request = self.factory.get(url)
         response = models(request)
-        response.render()
-        assert b'"Test2"' in response.content
+
+        expected = json.loads('["Generate Test"]')
+        assert response.data == expected
 
     def test_generate_view(self):
         generate_url = reverse('generate')
@@ -88,13 +89,4 @@ class TestMultiLLMViews(TestCase):
 
         expected = json.loads('[{"model": "Model_1", "response": "An error has occurred."}]')
         assert response.data == expected
-
-        """
-        Test that /generate returns a list of responses from
-        the requested llm(s), where the request body is a JSON
-        object like:
-
-        *Note @see - llm_communication.MockInputModel and llm_communication.llm_manager
-        """
-        pass
 
