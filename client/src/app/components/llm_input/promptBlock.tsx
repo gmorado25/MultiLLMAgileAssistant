@@ -1,16 +1,17 @@
 "use client";
 import React, { useState } from "react";
 import Card from "@mui/joy/Card";
-import Textarea from "@mui/joy/Textarea";
-import Button from "@mui/joy/Button";
-import Snackbar from "@mui/material/Snackbar";
 
 interface PromptBlock {
-  llm: string;
+  title: string;
   output: string;
+  sdlc_phase: string;
+  role: string;
 }
 
-const PromptBlock: React.FC<PromptBlock> = ({ llm, output }) => {
+const PromptBlock: React.FC<
+  PromptBlock & { isSelected: boolean; onSelect: () => void }
+> = ({ title, output, sdlc_phase, role, isSelected, onSelect }) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = (
@@ -26,19 +27,38 @@ const PromptBlock: React.FC<PromptBlock> = ({ llm, output }) => {
 
   return (
     <div className="PromptBlock">
-      <Card sx={{ width: 300, height: 150 }}>
-        <h1>{llm}</h1>
-        <Textarea
-          color="neutral"
-          minRows={15}
-          size="lg"
-          variant="soft"
-          maxRows={10}
-          value={output}
-          sx={{
-            height: 380,
+      <Card
+        sx={{
+          width: 300,
+          height: 120,
+          display: "flex", // Ensures the items inside are flex items, which can then be aligned properly
+          flexDirection: "column", // Stacks children vertically
+          justifyContent: "center", // Centers children along the vertical axis
+          alignItems: "center", // Centers children along the horizontal axis
+          backgroundColor: isSelected ? "lightblue" : "white",
+          cursor: "pointer",
+          padding: "16px", // Adds padding inside the card to prevent content from touching the edges
+          boxSizing: "border-box", // Ensures padding does not add to the overall width or height of the element
+          overflow: "hidden", // Prevents content from overflowing
+          textOverflow: "ellipsis", // Adds an ellipsis to text that overflows
+        }}
+        onClick={onSelect}
+      >
+        <h1
+          style={{
+            margin: "0",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
           }}
-        />
+        >
+          {title}
+        </h1>
+        <p
+          style={{ margin: "0", overflow: "hidden", textOverflow: "ellipsis" }}
+        >
+          {output}
+        </p>
       </Card>
     </div>
   );
