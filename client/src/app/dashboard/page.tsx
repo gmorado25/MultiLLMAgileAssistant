@@ -6,6 +6,7 @@ import Link from "next/link";
 import OutputBlock from "../components/llm_output/outputBlock";
 import LlmInputSearchToolbar from "../components/llm_input/llm-input-search-toolbar";
 import { useLLMStore } from "../zustand-stores/page/store/LLM-store";
+import JiraSearchBar from "../components/jira/jira-issues-search_box";
 
 const multiLLM: NextPage = () => {
   const outputData = useLLMStore.use.outputData();
@@ -37,6 +38,7 @@ const multiLLM: NextPage = () => {
           </a>
         </div>
       </div>
+      <JiraSearchBar></JiraSearchBar>
       <LlmInputSearchToolbar></LlmInputSearchToolbar>
       {!!outputData && (
         <div className="Outputs flex flex-row">

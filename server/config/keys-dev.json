@@ -1,0 +1,14 @@
+{
+    "llm_auth_keys": [
+        {"MULTI_LLM_SECRET_KEY": "TEST"},
+        {"OPENAI_API_KEY": "TEST"},
+        {"GOOGLE_APPLICATION_CREDENTIALS": "PATH TO GOOGLE CERT"},
+        {"ANTHROPIC_API_KEY": "TEST"}
+    ],
+    "jira_tokens": [
+        {
+            "site": "https://multi-llm.atlassian.net/",
+            "token": "ATATT3xFfGF0i9GV4lt-5sc5ew5jQm-KFYBtSPCHVtbwgulYm_uSvsntKN1tVnGqZrvcqfKFLnUXtMuS9yaBMR4cP_24hArPBacCAr_IU6JN2mn0I-15Lf7qL1OXid-HJoRP83S7NnvthF8OZLUpH9qai0zygvckXyQgyqZOiuAuMQ9Tg7eY9Xk=862FC402"
+        }
+    ]
+}
