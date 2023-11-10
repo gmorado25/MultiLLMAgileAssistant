@@ -1,6 +1,10 @@
+import json
+
 from django.test import TestCase
 from django.urls import reverse
 
+from rest_framework.parsers import JSONParser
+from rest_framework.request import Request
 from rest_framework.test import APIClient, APIRequestFactory, force_authenticate
 from rest_framework import status
 
@@ -68,33 +72,22 @@ class TestMultiLLMViews(TestCase):
         assert b'"Test2"' in response.content
 
     def test_generate_view(self):
+        generate_url = reverse('generate')
+        generate_request = self.factory.post(
+            path=generate_url,
+            data=json.dumps({
+                "models": ["Model_1"],
+                "prompt": "Put the system prompt here",
+                "data": "Put the user input here"
+            }),
+            content_type='application/json'
+        )
+        force_authenticate(generate_request)
+        converted_request = Request(generate_request, parsers=[JSONParser()])
+        response = LLMQuery().post(request=converted_request)
 
-        #llm_manager.registerModel
-
-        url1 = reverse('generate')
-        request = self.factory.post(url1,
-        {
-            "models": ["Model_1", "Model_2", "Model_3"],
-            "prompt": "Put the system prompt here",
-            "data": "Put the user input here"
-        })
-        response = models(request)
-        response.render()
-        assert response.content == {[
-            {
-                "model": "Model1",
-                "response": "An error occurred."
-            },
-            {
-                "model": "Model2",
-                "response": "An error occurred."
-            },
-            {
-                "model": "Model3",
-                "response": "An error occurred."
-            },
-            
-        ]}
+        expected = json.loads('[{"model": "Model_1", "response": "An error has occurred."}]')
+        assert response.data == expected
 
         """
         Test that /generate returns a list of responses from
