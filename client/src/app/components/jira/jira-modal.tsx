@@ -9,13 +9,8 @@ import DialogTitle from "@mui/joy/DialogTitle";
 import DialogContent from "@mui/joy/DialogContent";
 import { Divider, TextField } from "@mui/material";
 import useGetPrompts from "@/app/zustand-stores/page/hooks/use-get-prompts";
-import {
-  setInputData,
-  setSelectedPrompt,
-  useLLMStore,
-} from "@/app/zustand-stores/page/store/LLM-store";
-import PromptSearchToolbar from "@/app/components/llm_input/prompt-search-toolbar";
-import PromptBlock from "../llm_input/promptBlock";
+import {useLLMStore} from "@/app/zustand-stores/page/store/LLM-store";
+import JiraSearchBar from "./jira-issues-search_box";
 
 export default function JiraModal() {
   //Lazy loading the hooks to get the prompts and place in zustand store for retrieval
@@ -59,8 +54,7 @@ export default function JiraModal() {
               <div className="flex flex-row w-full">
                 <div className="flex w-1/6">
                   <div className="flex flex-col">
-                    <label htmlFor="">Search for Issues</label>
-                    <input type="text" />
+                    <JiraSearchBar/>
                   </div>
                 </div>
                 <Divider orientation="vertical" className="mx-4" />

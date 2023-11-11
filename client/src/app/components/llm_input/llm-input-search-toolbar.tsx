@@ -3,7 +3,6 @@ import React, { FC } from "react";
 import { Divider, FormControl, MenuItem, Select } from "@mui/material";
 import Button from "@mui/joy/Button";
 import Textarea from "@mui/joy/Textarea";
-import Option from "@mui/joy/Option";
 import * as yup from "yup";
 import PromptModal from "./prompt-modal";
 import {
@@ -15,8 +14,9 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useGetModels from "@/app/zustand-stores/page/hooks/use-get-models";
 import JiraConnect from "../jira/jira-connect-modal";
+import AsyncSelector from "./AsyncSelector";
 
-const names = ["ChatGPT", "Claude", "Llama", "Perplexity", "Test"];
+const names = ["GPT3.5", "Bard", "Llama", "Test"];
 
 type InputSearchFormSchema = {
   format?: string;
@@ -63,34 +63,7 @@ const LLMSearchToolbar: FC = () => {
         <div className="p-4">
           <div className="flex flex-row">
             <PromptModal />
-            {/* <select
-              className=" ml-4 mr-4"
-              placeholder="Output Format"
-              {...register("format")}
-            >
-              <option value="graph">Graph</option>
-              <option value="table">Table</option>
-              <option value="text">Text</option>
-            </select>
-            <select
-              className="mr-4"
-              placeholder="Output Modifier"
-              {...register("modifier")}
-            >
-              <option value="dog">1</option>
-              <option value="cat">2</option>
-            </select>
-            <select
-              className="mr-4"
-              placeholder="Coding Language"
-              {...register("language")}
-            >
-              <option value="C++">C++</option>
-              <option value="Go">Go</option>
-              <option value="Java">Java</option>
-              <option value="Javascript">Javascript</option>
-              <option value="Python">Python</option>
-            </select> */}
+            <AsyncSelector origin="/formats" default="Select Format"/>
             <Controller
               name="models"
               control={control}

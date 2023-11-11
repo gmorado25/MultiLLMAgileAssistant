@@ -1,12 +1,8 @@
 "use client";
 import axios from "axios";
-import {
-  setPrompts,
-  setModels,
-  getCookie,
-  useLLMStore,
-} from "../store/LLM-store";
+import {setPrompts, useLLMStore} from "../store/LLM-store";
 import { useEffect } from "react";
+import { getCookie } from "@/app/utils/cookies";
 
 // Custom hook with useEffect
 const useSearchPrompts = () => {

@@ -44,7 +44,8 @@ def _tryQuery(prompt: str, dataset: str, model: str) -> LLMResponse:
 def registerModel(
     id: str, model: 
     Type[AbstractEndpoint], 
-    model_kwargs: dict[str, Any]):
+    model_kwargs: dict[str, Any]
+):
     """ -----------------------------------------------------------------------
     Summary:
         Register and construct a new LLM endpoint with the LLM manager.

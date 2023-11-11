@@ -23,3 +23,11 @@ export const getCSRFHeader = () => {
         }
     }
 }
+
+export const getJSONHeader = () => {
+    return {
+        headers: {
+            'content-type': 'application/json',
+        }
+    }
+}

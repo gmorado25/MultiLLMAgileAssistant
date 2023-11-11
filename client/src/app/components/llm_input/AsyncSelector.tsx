@@ -1,9 +1,8 @@
 "use client";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import Option from "@mui/joy/Option";
 import { Select } from "@mui/material";
-import axios from "axios";
-import { getJSONHeader } from "@/app/utils/cookies";
+import useOptions from "@/app/zustand-stores/page/hooks/use-options";
 
 interface SelectorFields {
     origin: string, 
@@ -11,24 +10,18 @@ interface SelectorFields {
 };
 
 /**
+ * Component designed to display a list of dynamic options loaded
+ * from the given URL origin.
  * 
- * @param origin The
- * @returns 
+ * @param selection Field containing the URL to retrieve available options 
+ *                  from and a default value before the user makes a choice.
+ * 
+ * @returns Returns a drop-down menu component made of the list of selections 
+ *          retrieved from the given origin.
  */
-const AsyncSelector: FC<SelectorFields> = (field: SelectorFields) => {
+const AsyncSelector: FC<SelectorFields> = (selection: SelectorFields) => {
 
-    const fetchData = () => {
-        return axios.get(field.origin, getJSONHeader());
-    }
-
-    const onUpdateOptions = (isCurrent: boolean) => {
-        fetchData().then((response: any) => {
-            if (isCurrent)
-                setOptions(response.data);
-        }).catch(e => {
-            console.log(e);
-        });
-    }
+    let options = useOptions(selection.origin);
 
     const optionOf = (url: string) => {
         return options.map(option => {
@@ -37,18 +30,10 @@ const AsyncSelector: FC<SelectorFields> = (field: SelectorFields) => {
             );
         });
     };
-    
-    const [options, setOptions] = useState<string[]>([]);
-    
-    useEffect(() => {
-        let isCurrent = true;               // set current flag when component mounts and renders
-        onUpdateOptions(isCurrent);         // perform an async data fetch
-        return () => {isCurrent = false};   // reset flag on unmount to false to prevent race conditions if the component re-renders before the data fetch completes.
-    }, [onUpdateOptions]);
 
     return(
-        <Select className=" ml-4 mr-4" placeholder={field.default}>
-            {optionOf(field.origin)};
+        <Select className="ml-4 mr-4" placeholder={selection.default}>
+            {optionOf(selection.origin)};
         </Select>
     );
 };
