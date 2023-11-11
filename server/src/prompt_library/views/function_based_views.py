@@ -46,7 +46,7 @@ def prompt_detail(request: Request, id: int, format=None) -> Response:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
 @api_view(['GET'])
-def format_list(request: Request) -> Response:
+def format_list(request: Request, format=None) -> Response:
     formats = Format.objects.all().values('title')
     return Response([i['title'] for i in formats])
     
