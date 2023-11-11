@@ -98,7 +98,7 @@ const PromptSearchToolbar: FC = () => {
           placeholder="Search"
           {...register("searchInput")}
         />
-        <Button type="submit">Search</Button>
+        <Button type="submit" data-testid="prompt_search_submit-button">Search</Button>
       </div>
     </form>
   );
