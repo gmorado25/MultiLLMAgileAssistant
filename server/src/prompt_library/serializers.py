@@ -9,6 +9,6 @@ class PromptSerializer(serializers.ModelSerializer):
 class FormatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Format
-        fields = ['title', 'description', 'sdlc_phase', 'role']
+        fields = ['title', 'description']
 
 

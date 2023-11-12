@@ -2,7 +2,7 @@
 import axios from "axios";
 import {setPrompts, useLLMStore} from "../store/LLM-store";
 import { useEffect } from "react";
-import { getCookie } from "@/app/utils/cookies";
+import { getJSONHeader } from "@/app/utils/cookies";
 
 // Custom hook with useEffect
 const useSearchPrompts = () => {
@@ -21,28 +21,15 @@ const useSearchPrompts = () => {
   const queryString = queryParts.join("&");
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const csrftoken = getCookie("csrftoken");
 
-        const apiClient = axios.create({
-          baseURL: "http://127.0.0.1:8000/",
-          headers: {
-            "content-type": "application/json",
-            "X-CSRFToken": csrftoken,
-          },
-        });
-
-        // Make the GET request using the constructed query string
-        const response = await apiClient.get(`prompts/search/?${queryString}`);
-
-        const data = response.data.prompts;
-
-        setPrompts(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    const fetchData = () => {
+      const config = getJSONHeader();
+      axios.get(`prompts/search/?${queryString}`, config).then(r => {
+        setPrompts(r.data)
+      }).catch(e => {
+        console.log(e);
+      })
+    }
 
     if (phase || role || searchInput) {
       fetchData(); // Call the fetchData only if there is some search input
