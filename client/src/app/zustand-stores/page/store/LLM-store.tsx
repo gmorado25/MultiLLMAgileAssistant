@@ -21,6 +21,7 @@ export type LLMStoreProps = {
   models: String[];
   selectedModels: String[];
   inputData: string;
+  format: string;
   outputData: OutputType[];
   selectedPrompt: PromptType;
   promptSearch: InputPromptSearch;
@@ -32,6 +33,7 @@ const initialState: LLMStoreProps = {
   models: [],
   selectedModels: [],
   inputData: "",
+  format: "",
   outputData: [],
   selectedPrompt: { title: "", description: "", sdlc_phase: "", role: "" },
   promptSearch: { role: "", phase: "", searchInput: "" },
@@ -64,6 +66,9 @@ export const setPromptSearch = (promptSearch: InputPromptSearch): void =>
 
 export const setIsGeneratedLoading = (isGeneratedLoading: boolean): void =>
   useLLMStore.setState(() => ({ isGeneratedLoading }));
+
+export const setFormat = (format: string): void =>
+  useLLMStore.setState(() => ({ format }));
 
 const useLLMStoreBase = create<LLMStoreProps>()(() => ({
   ...initialState,

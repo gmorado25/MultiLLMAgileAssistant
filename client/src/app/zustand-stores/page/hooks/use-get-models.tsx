@@ -10,7 +10,7 @@ const useGetModels = () => {
   const fetchData = async () => {
     try {
       const config = getCSRFHeader()
-      const response = await axios.get("/models", config);
+      const response = await axios.get("/models.json", config);
       setModels(response.data);
     } catch (err) {
       console.log(err);

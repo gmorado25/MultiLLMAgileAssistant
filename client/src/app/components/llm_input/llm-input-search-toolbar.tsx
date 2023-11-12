@@ -1,20 +1,26 @@
 "use client";
 import React, { FC } from "react";
+import { Controller, useForm } from "react-hook-form";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 import { Divider, FormControl, MenuItem, Select } from "@mui/material";
 import Button from "@mui/joy/Button";
 import Textarea from "@mui/joy/Textarea";
-import * as yup from "yup";
+
 import PromptModal from "./prompt-modal";
+import JiraConnect from "../jira/jira-connect-modal";
+import AsyncSelector from "./async-selector";
+import FormatDisplay from "./format-display";
+
 import {
+  setFormat,
   setInputData,
   setSelectedModels,
 } from "../../zustand-stores/page/store/LLM-store";
 import useGenerate from "@/app/zustand-stores/page/hooks/use-generate";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import useGetModels from "@/app/zustand-stores/page/hooks/use-get-models";
-import JiraConnect from "../jira/jira-connect-modal";
-import AsyncSelector from "./AsyncSelector";
 
 const names = ["GPT3.5", "Bard", "Llama", "Test"];
 
@@ -63,15 +69,19 @@ const LLMSearchToolbar: FC = () => {
         <div className="p-4">
           <div className="flex flex-row">
             <PromptModal />
-            <AsyncSelector origin="/formats" default="Select Format"/>
-            <Controller
+            <AsyncSelector 
+              url="/formats.json" 
+              placeholder="Select Format" 
+              onChange={(value) => {
+                setFormat(value);
+              }} 
+            />
+            {/* <Controller
               name="models"
               control={control}
               render={({ field }) => (
                 <FormControl sx={{ m: 1, width: 300 }}>
                   <Select
-                    labelId="multiple-name-label"
-                    id="multiple-name"
                     multiple
                     value={field.value}
                     onChange={(event) => {
@@ -99,12 +109,12 @@ const LLMSearchToolbar: FC = () => {
                   </Select>
                 </FormControl>
               )}
-            />
+            /> */}
             <div className="flex justify-end items-end">
               <JiraConnect />
             </div>
           </div>
-
+          <FormatDisplay />
           <Textarea
             className="overflow-auto h-60"
             placeholder="Input text here..."
