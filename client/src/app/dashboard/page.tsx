@@ -38,7 +38,8 @@ const multiLLM: NextPage = () => {
           </a>
         </div>
       </div>
-      <JiraSearchBar></JiraSearchBar>
+      {/* TODO: Uncomment or delete jirasearchbar */}
+      {/* <JiraSearchBar></JiraSearchBar> */}
       <LlmInputSearchToolbar></LlmInputSearchToolbar>
       {!!outputData && (
         <div className="Outputs flex flex-row">
