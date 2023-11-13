@@ -72,11 +72,11 @@ const LLMSearchToolbar: FC = () => {
             <AsyncSelector 
               url="/formats.json" 
               placeholder="Select Format" 
-              onChange={(value) => {
+              callback={(value) => {
                 setFormat(value);
               }} 
             />
-            {/* <Controller
+            <Controller
               name="models"
               control={control}
               render={({ field }) => (
@@ -109,7 +109,7 @@ const LLMSearchToolbar: FC = () => {
                   </Select>
                 </FormControl>
               )}
-            /> */}
+            />
             <div className="flex justify-end items-end">
               <JiraConnect />
             </div>

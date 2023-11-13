@@ -17,10 +17,11 @@ const FormatDisplay: FC = () => {
     const [content, setContent] = useState("");
 
     let format = useLLMStore.use.format();
-    let url = `/formats/search.json/?format=${format}`
 
     useEffect(() => {
 
+        let url = `/formats/search.json/?format=${format}`
+        
         const fetchData = () => {
             return axios.get(url, getJSONHeader());
         }

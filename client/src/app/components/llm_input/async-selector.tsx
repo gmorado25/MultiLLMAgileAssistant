@@ -7,7 +7,7 @@ import { getJSONHeader } from "@/app/utils/cookies";
 interface SelectorProperties {
     url: string, 
     placeholder: string,
-    onChange: (arg: any) => void
+    callback: (arg: any) => void
 };
 
 /**
@@ -20,17 +20,24 @@ interface SelectorProperties {
  * @returns Returns a drop-down menu component made of the list of selections 
  *          retrieved from the given origin.
  */
-const AsyncSelector: FC<SelectorProperties> = ({ url, placeholder, onChange }: SelectorProperties) => {
+const AsyncSelector: FC<SelectorProperties> = (
+    { url, placeholder, callback }: SelectorProperties
+) => {
 
+    // internal state depends on loaded options from fetch
     const [options, setOptions] = useState<string[]>([]);
 
-    // call hook only once on load to grab formats
+    // fetch list of options on mount, track current flag
+    // to prevent race conditions if component re-renders
+    // and the hook is run again before previous fetch returns
     useEffect(() => {
+        let isCurrentRequest = true;
+
         const fetchData = () => {
             return axios.get(url, getJSONHeader());
         }
     
-        const onUpdateOptions = () => {
+        const updateOptions = () => {
             fetchData().then((response: any) => {
                 if (isCurrentRequest)
                     setOptions(response.data);
@@ -39,18 +46,18 @@ const AsyncSelector: FC<SelectorProperties> = ({ url, placeholder, onChange }: S
             });
         }
 
-        let isCurrentRequest = true;             // set current flag when component mounts and hook is run
-        onUpdateOptions();                       // perform an async data fetch
-        return () => {isCurrentRequest = false}; // reset on unmount to prevent race conditions if the component re-mounts before the data fetch completes.
-    }, []);
+        updateOptions();                       
+        return () => {isCurrentRequest = false};
+    }, [url]);
 
     return(
         <Select 
             className=" ml-4 mr-4" 
             placeholder={placeholder} 
-            onChange={(event) => onChange(event.target.value)}
+            onChange={(event) => callback(event.target.value)}
         >
-        {options.map((option) => <MenuItem value={option} key={option}>{option}</MenuItem>)}
+            {options.map((option) => 
+                <MenuItem value={option} key={option}>{option}</MenuItem>)}
         </Select>
     );
 };

@@ -8,19 +8,18 @@ import { getJSONHeader } from "@/app/utils/cookies";
 const useSearchPrompts = () => {
   const { phase, role, searchInput } = useLLMStore.use.promptSearch();
 
-  // Initialize an array to hold query parts
-  let queryParts = [];
-
-  // Append the query parameters only if they are not empty
-  if (phase) queryParts.push(`sdlc_phase=${encodeURIComponent(phase)}`);
-  if (role) queryParts.push(`role=${encodeURIComponent(role)}`);
-  if (searchInput)
-    queryParts.push(`description=${encodeURIComponent(searchInput)}`);
-
-  // Join the query parts using the '&' character
-  const queryString = queryParts.join("&");
-
   useEffect(() => {
+    // Initialize an array to hold query parts
+    let queryParts = [];
+
+    // Append the query parameters only if they are not empty
+    if (phase) queryParts.push(`sdlc_phase=${encodeURIComponent(phase)}`);
+    if (role) queryParts.push(`role=${encodeURIComponent(role)}`);
+    if (searchInput)
+      queryParts.push(`description=${encodeURIComponent(searchInput)}`);
+
+    // Join the query parts using the '&' character
+    const queryString = queryParts.join("&");
 
     const fetchData = () => {
       const config = getJSONHeader();
