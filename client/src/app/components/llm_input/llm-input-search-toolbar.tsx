@@ -15,7 +15,7 @@ import AsyncSelector from "./async-selector";
 import FormatDisplay from "./format-display";
 
 import {
-  setFormat,
+  setSelectedFormat,
   setInputData,
   setSelectedModels,
 } from "../../zustand-stores/page/store/LLM-store";
@@ -51,7 +51,7 @@ const LLMSearchToolbar: FC = () => {
     models: yup.array().of(yup.string()),
   });
 
-  const { register, control, getValues } = useForm({
+  const { control } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(GENERATE_REQUEST_FORM_SCHEMA),
     defaultValues: { ...initialInputSearchFormValues },
@@ -61,7 +61,7 @@ const LLMSearchToolbar: FC = () => {
   const handleSubmit = async () => {
     (await generate)();
   };
-
+  
   return (
     <div className="w-full p-4">
       <form className="flex flex-col w-full pr-8 space-y-4 border-Primary rounded-lg xl:pr-0 py-4 ">
@@ -69,24 +69,23 @@ const LLMSearchToolbar: FC = () => {
         <div className="p-4">
           <div className="flex flex-row">
             <PromptModal />
-            <AsyncSelector 
+            <AsyncSelector
               url="/formats.json" 
-              placeholder="Select Format" 
+              placeholder="Select Format"
               callback={(value) => {
-                setFormat(value);
-              }} 
+                setSelectedFormat(value);
+              }}
             />
             <Controller
               name="models"
               control={control}
               render={({ field }) => (
-                <FormControl sx={{ m: 1, width: 300 }}>
-                  <Select
-                    multiple
+                <FormControl>
+                  <AsyncSelector
                     value={field.value}
-                    onChange={(event) => {
-                      // This will pass the selected values to React Hook Form's controller
-                      const selected = event.target.value;
+                    url="/models.json" 
+                    placeholder="Select one or more LLMs" 
+                    callback={(selected) => {
                       // Ensure only string[] is passed, even if empty
                       const validModels = Array.isArray(selected)
                         ? selected.filter(
@@ -99,14 +98,9 @@ const LLMSearchToolbar: FC = () => {
                       // Update the form state
                       field.onChange(validModels);
                     }}
+                    multiple
                     renderValue={(selected) => selected.join(", ")}
-                  >
-                    {names.map((name) => (
-                      <MenuItem key={name} value={name}>
-                        {name}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  />
                 </FormControl>
               )}
             />

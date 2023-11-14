@@ -30,16 +30,16 @@ const PROMPT_SEARCH_FORM_SCHEMA = yup.object().shape({
 
 const PromptSearchToolbar: FC = () => {
   useSearchPrompts();
-  
+  const promptData = useLLMStore.use.prompts();
+
   const [uniqueRoles, setUniqueRoles] = useState<string[]>([]);
   const [uniquePhases, setUniquePhases] = useState<string[]>([]);
 
   // Capture the initial unique values for role and sdlc_phase
   useEffect(() => {
-    const promptData = useLLMStore.use.prompts();
     setUniqueRoles(_.uniq(promptData.map(({ role }) => role)));
     setUniquePhases(_.uniq(promptData.map(({ sdlc_phase }) => sdlc_phase)));
-  }, []);
+  }, [promptData]);
 
   const { register, handleSubmit } = useForm<PromptSearchFormSchema>({
     mode: "onChange",

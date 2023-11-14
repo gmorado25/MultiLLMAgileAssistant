@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useLLMStore } from "@/app/zustand-stores/page/store/LLM-store";
+import { setSelectedFormatDescription, useLLMStore } from "@/app/zustand-stores/page/store/LLM-store";
 import { FC, useEffect, useState } from "react";
 import { getJSONHeader } from "@/app/utils/cookies";
 
@@ -14,9 +14,8 @@ import { getJSONHeader } from "@/app/utils/cookies";
  */
 const FormatDisplay: FC = () => {
 
+    let format = useLLMStore.use.selectedFormat();
     const [content, setContent] = useState("");
-
-    let format = useLLMStore.use.format();
 
     useEffect(() => {
 
@@ -28,8 +27,10 @@ const FormatDisplay: FC = () => {
     
         const onUpdateOptions = () => {
             fetchData().then((response: any) => {
-                if (isCurrentRequest)
-                    setContent(response.data['description']);
+                if (isCurrentRequest) {
+                    setContent(response.data.description);
+                    setSelectedFormatDescription(response.data.description);
+                }
             }).catch(e => {
                 console.log(e);
             });
@@ -42,7 +43,11 @@ const FormatDisplay: FC = () => {
     }, [format]);
 
     return(
-        <>{content}</>
+        <>
+        <div>
+            {content}
+        </div>
+        </>
     );
 };
 

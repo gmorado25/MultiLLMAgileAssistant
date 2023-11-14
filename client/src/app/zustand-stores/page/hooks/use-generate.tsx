@@ -10,6 +10,7 @@ const axios = require("axios").default;
 
 const useGenerate = async () => {
   const prompt = useLLMStore.use.selectedPrompt();
+  const format = useLLMStore.use.selectedFormatDescription();
   const data = useLLMStore.use.inputData();
   const models = useLLMStore.use.selectedModels();
 
@@ -18,7 +19,7 @@ const useGenerate = async () => {
       setIsGeneratedLoading(true);
       const body = JSON.stringify({
         models: models,
-        prompt: prompt.description,
+        prompt: prompt.description + "\n" + format,
         data: data,
       });
 
