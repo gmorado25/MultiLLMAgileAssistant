@@ -128,7 +128,7 @@ const LLMSearchToolbar: FC = () => {
               // eslint-disable-next-line react-hooks/rules-of-hooks
               onClick={handleSubmit}
               className=""
-              disabled={false}
+              disabled={useLLMStore.use.isGeneratedLoading()}
               variant="solid"
               data-testid="input-search_submit-button"
             >

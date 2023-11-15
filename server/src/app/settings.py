@@ -93,7 +93,7 @@ USE_TZ = True
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
 if (DEBUG is True):
-    auth_config = CONFIG_DIR / 'keys-dev.json' 
+    auth_config = CONFIG_DIR / 'keys-prod.json' 
 else: 
     auth_config = CONFIG_DIR / 'keys-prod.json'
 

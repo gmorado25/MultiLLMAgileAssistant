@@ -15,11 +15,12 @@ const useGenerate = async () => {
   const models = useLLMStore.use.selectedModels();
 
   const generate = () => {
+    let modifier = (format.length === 0) ? ("") : ("\n(" + format + ")")
     try {
       setIsGeneratedLoading(true);
       const body = JSON.stringify({
         models: models,
-        prompt: prompt.description + "\n" + format,
+        prompt: prompt.description + modifier,
         data: data,
       });
 
