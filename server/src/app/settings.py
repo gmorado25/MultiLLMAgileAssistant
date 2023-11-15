@@ -1,4 +1,3 @@
-from distutils.util import strtobool
 import json, os
 from pathlib import Path
 
@@ -91,7 +90,7 @@ USE_TZ = True
 #   configurations.
 # =============================================================================
 
-DEBUG = True; #os.getenv('DEBUG', 'False').lower() == 'true'
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
 if (DEBUG is True):
     auth_config = CONFIG_DIR / 'keys-dev.json' 
