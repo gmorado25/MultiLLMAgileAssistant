@@ -115,10 +115,11 @@ const LLMSearchToolbar: FC = () => {
             onChange={(value) => {
               setInputData(value.target.value);
             }}
+            data-testid="input-search_text-area" // Add this line
           ></Textarea>
           <div className="flex items-end justify-end py-4">
             <div className="px-4">
-              <Button className="" disabled={false} variant="outlined">
+              <Button className="" disabled={false} variant="outlined" data-testid="input-search_clear-button">
                 Clear
               </Button>
             </div>
@@ -128,6 +129,7 @@ const LLMSearchToolbar: FC = () => {
               className=""
               disabled={false}
               variant="solid"
+              data-testid="input-search_submit-button"
             >
               Submit
             </Button>

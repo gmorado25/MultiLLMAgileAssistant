@@ -33,4 +33,9 @@ class TestAppViews(TestCase):
         dashboard_url = reverse('dashboard')
         response = self.client.get(dashboard_url)
         assert response.status_code == status.HTTP_200_OK
+
+    def test_adminPanel_url_reachable(self):
+        url = reverse('admin')
+        response = self.client.get(url)
+        assert response.status_code == status.HTTP_200_OK
     
