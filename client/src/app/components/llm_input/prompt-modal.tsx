@@ -33,15 +33,17 @@ export default function LayoutModalDialog() {
   return (
     <React.Fragment>
       <Stack direction="row" spacing={1}>
-        <Button
-          variant="solid"
-          color="primary"
-          onClick={() => {
-            setLayout("fullscreen");
-          }}
-        >
-          Select Prompt
-        </Button>
+        <div className="flex  ml-4 mr-4">
+          <Button
+            variant="solid"
+            color="primary"
+            onClick={() => {
+              setLayout("fullscreen");
+            }}
+          >
+            Select Prompt
+          </Button>
+        </div>
       </Stack>
       <Modal open={!!layout} onClose={() => setLayout(undefined)}>
         <ModalDialog layout={layout}>

@@ -5,24 +5,23 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { Divider, FormControl, MenuItem, Select } from "@mui/material";
+import { Divider, FormControl } from "@mui/material";
 import Button from "@mui/joy/Button";
 import Textarea from "@mui/joy/Textarea";
 
 import PromptModal from "./prompt-modal";
 import JiraConnect from "../jira/jira-connect-modal";
 import AsyncSelector from "./async-selector";
-import FormatDisplay from "./format-display";
+import OptionDisplay from "./option-display";
 
 import {
   setSelectedFormat,
   setInputData,
   setSelectedModels,
+  useLLMStore,
 } from "../../zustand-stores/page/store/LLM-store";
 import useGenerate from "@/app/zustand-stores/page/hooks/use-generate";
-import useGetModels from "@/app/zustand-stores/page/hooks/use-get-models";
-
-const names = ["GPT3.5", "Bard", "Llama", "Test"];
+import useFormat from "@/app/zustand-stores/page/hooks/use-format";
 
 type InputSearchFormSchema = {
   format?: string;
@@ -39,8 +38,6 @@ const initialInputSearchFormValues: InputSearchFormSchema = {
 };
 
 const LLMSearchToolbar: FC = () => {
-  // Lazy Loading
-  useGetModels();
 
   const generate = useGenerate();
 
@@ -84,7 +81,8 @@ const LLMSearchToolbar: FC = () => {
                   <AsyncSelector
                     value={field.value}
                     url="/models.json" 
-                    placeholder="Select one or more LLMs" 
+                    placeholder="Select one or more LLMs"
+                    required
                     callback={(selected) => {
                       // Ensure only string[] is passed, even if empty
                       const validModels = Array.isArray(selected)
@@ -108,7 +106,10 @@ const LLMSearchToolbar: FC = () => {
               <JiraConnect />
             </div>
           </div>
-          <FormatDisplay />
+          <OptionDisplay heading="Prompt" hook={() => useLLMStore.use.selectedPrompt().description} />
+          <OptionDisplay heading="Modify the output" hook={useFormat} />
+          <Divider></Divider>
+          <h4>Enter your data:</h4>
           <Textarea
             className="overflow-auto h-60"
             placeholder="Input text here..."

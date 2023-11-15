@@ -8,6 +8,7 @@ interface SelectorProperties {
     url: string, 
     placeholder: string,
     multiple?: boolean | undefined,
+    required?: boolean | undefined,
     renderValue?: ((value: (string | undefined)[]) => React.ReactNode) | undefined,
     value?: "" | (string | undefined)[] | undefined,
     callback: (arg: any) => void
@@ -28,6 +29,7 @@ const AsyncSelector: FC<SelectorProperties> = ({
     placeholder, 
     callback, 
     multiple=false,
+    required=false,
     renderValue=undefined,
     value=undefined
 }: SelectorProperties) => {
@@ -79,6 +81,7 @@ const AsyncSelector: FC<SelectorProperties> = ({
             {options.map((option) => {
                 return <MenuItem value={option} key={option}>{option}</MenuItem>
             })};
+            {!required && <MenuItem value={undefined} key={"None"}>{"None"}</MenuItem>}
         </Select>
     );
 };

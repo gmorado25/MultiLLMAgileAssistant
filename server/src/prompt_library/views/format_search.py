@@ -11,7 +11,7 @@ class FormatSearch(APIView):
     def get(self, request: Request, format=None) -> Response:
         query = request.query_params.get("format") or ""
         
-        if (query is None or query is ""):
+        if (query is None or query == ""):
              return Response(status=status.HTTP_404_NOT_FOUND)
         
         try:

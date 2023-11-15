@@ -1,19 +1,9 @@
-"use client";
 import axios from "axios";
 import { setSelectedFormatDescription, useLLMStore } from "@/app/zustand-stores/page/store/LLM-store";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getJSONHeader } from "@/app/utils/cookies";
 
-/**
- * Component designed to display the format string selected
- * by the user.
- * 
- * @param 
- * 
- * @returns 
- */
-const FormatDisplay: FC = () => {
-
+const useFormat = () => {
     let format = useLLMStore.use.selectedFormat();
     const [content, setContent] = useState("");
 
@@ -37,18 +27,16 @@ const FormatDisplay: FC = () => {
         }
 
         let isCurrentRequest = true;
-        onUpdateOptions();
+        if (format === undefined) {
+            setContent("")
+            setSelectedFormatDescription("");
+        } else
+            onUpdateOptions();
         return () => {isCurrentRequest = false};
 
     }, [format]);
+    
+    return content;
+}
 
-    return(
-        <>
-        <div>
-            {content}
-        </div>
-        </>
-    );
-};
-
-export default FormatDisplay;
+export default useFormat;
