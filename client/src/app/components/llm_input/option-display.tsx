@@ -13,7 +13,8 @@ interface DisplayType {
  * @param title The heading to display above the display content
  * @param hook The hook to retrieve content on update
  * 
- * @returns 
+ * @returns An option display component with the given heading that
+ * grabs its content from the given hook.
  */
 const OptionDisplay: FC<DisplayType> = ({heading, hook}: DisplayType) => {
 
