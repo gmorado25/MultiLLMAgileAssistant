@@ -1,22 +1,28 @@
 "use client";
 import React, { FC } from "react";
+import { Controller, useForm } from "react-hook-form";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 import { Divider, FormControl, MenuItem, Select } from "@mui/material";
 import Button from "@mui/joy/Button";
 import Textarea from "@mui/joy/Textarea";
-import Option from "@mui/joy/Option";
-import * as yup from "yup";
+
 import PromptModal from "./prompt-modal";
+import JiraConnect from "../jira/jira-connect-modal";
+import AsyncSelector from "./async-selector";
+import FormatDisplay from "./format-display";
+
 import {
+  setSelectedFormat,
   setInputData,
   setSelectedModels,
 } from "../../zustand-stores/page/store/LLM-store";
 import useGenerate from "@/app/zustand-stores/page/hooks/use-generate";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import useGetModels from "@/app/zustand-stores/page/hooks/use-get-models";
-import JiraConnect from "../jira/jira-connect-modal";
 
-const names = ["ChatGPT", "Claude", "Llama", "Perplexity", "Test"];
+const names = ["GPT3.5", "Bard", "Llama", "Test"];
 
 type InputSearchFormSchema = {
   format?: string;
@@ -45,7 +51,7 @@ const LLMSearchToolbar: FC = () => {
     models: yup.array().of(yup.string()),
   });
 
-  const { register, control, getValues } = useForm({
+  const { control } = useForm({
     mode: "onSubmit",
     resolver: yupResolver(GENERATE_REQUEST_FORM_SCHEMA),
     defaultValues: { ...initialInputSearchFormValues },
@@ -55,7 +61,7 @@ const LLMSearchToolbar: FC = () => {
   const handleSubmit = async () => {
     (await generate)();
   };
-
+  
   return (
     <div className="w-full p-4">
       <form className="flex flex-col w-full pr-8 space-y-4 border-Primary rounded-lg xl:pr-0 py-4 ">
@@ -63,47 +69,23 @@ const LLMSearchToolbar: FC = () => {
         <div className="p-4">
           <div className="flex flex-row">
             <PromptModal />
-            {/* <select
-              className=" ml-4 mr-4"
-              placeholder="Output Format"
-              {...register("format")}
-            >
-              <option value="graph">Graph</option>
-              <option value="table">Table</option>
-              <option value="text">Text</option>
-            </select>
-            <select
-              className="mr-4"
-              placeholder="Output Modifier"
-              {...register("modifier")}
-            >
-              <option value="dog">1</option>
-              <option value="cat">2</option>
-            </select>
-            <select
-              className="mr-4"
-              placeholder="Coding Language"
-              {...register("language")}
-            >
-              <option value="C++">C++</option>
-              <option value="Go">Go</option>
-              <option value="Java">Java</option>
-              <option value="Javascript">Javascript</option>
-              <option value="Python">Python</option>
-            </select> */}
+            <AsyncSelector
+              url="/formats.json" 
+              placeholder="Select Format"
+              callback={(value) => {
+                setSelectedFormat(value);
+              }}
+            />
             <Controller
               name="models"
               control={control}
               render={({ field }) => (
-                <FormControl sx={{ m: 1, width: 300 }}>
-                  <Select
-                    labelId="multiple-name-label"
-                    id="multiple-name"
-                    multiple
+                <FormControl>
+                  <AsyncSelector
                     value={field.value}
-                    onChange={(event) => {
-                      // This will pass the selected values to React Hook Form's controller
-                      const selected = event.target.value;
+                    url="/models.json" 
+                    placeholder="Select one or more LLMs" 
+                    callback={(selected) => {
                       // Ensure only string[] is passed, even if empty
                       const validModels = Array.isArray(selected)
                         ? selected.filter(
@@ -116,14 +98,9 @@ const LLMSearchToolbar: FC = () => {
                       // Update the form state
                       field.onChange(validModels);
                     }}
+                    multiple
                     renderValue={(selected) => selected.join(", ")}
-                  >
-                    {names.map((name) => (
-                      <MenuItem key={name} value={name}>
-                        {name}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  />
                 </FormControl>
               )}
             />
@@ -131,7 +108,7 @@ const LLMSearchToolbar: FC = () => {
               <JiraConnect />
             </div>
           </div>
-
+          <FormatDisplay />
           <Textarea
             className="overflow-auto h-60"
             placeholder="Input text here..."

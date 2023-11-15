@@ -1,22 +1,6 @@
 import { create } from "zustand";
 import { createSelectors } from "@/app/utils/zustand-utils";
 
-export function getCookie(name: string) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      // Does this cookie string begin with the name we want?
-      if (cookie.substring(0, name.length + 1) === name + "=") {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
-}
-
 type PromptType = {
   title: string;
   description: string;
@@ -30,13 +14,18 @@ type InputPromptSearch = {
   searchInput: string;
 };
 
-type OutputType = { model: string; response: string };
+type OutputType = { 
+  model: string; 
+  response: string 
+};
 
 export type LLMStoreProps = {
   prompts: PromptType[];
   models: String[];
   selectedModels: String[];
   inputData: string;
+  selectedFormat: string;
+  selectedFormatDescription: string;
   outputData: OutputType[];
   selectedPrompt: PromptType;
   promptSearch: InputPromptSearch;
@@ -48,6 +37,8 @@ const initialState: LLMStoreProps = {
   models: [],
   selectedModels: [],
   inputData: "",
+  selectedFormat: "",
+  selectedFormatDescription: "",
   outputData: [],
   selectedPrompt: { title: "", description: "", sdlc_phase: "", role: "" },
   promptSearch: { role: "", phase: "", searchInput: "" },
@@ -80,6 +71,12 @@ export const setPromptSearch = (promptSearch: InputPromptSearch): void =>
 
 export const setIsGeneratedLoading = (isGeneratedLoading: boolean): void =>
   useLLMStore.setState(() => ({ isGeneratedLoading }));
+
+export const setSelectedFormat = (selectedFormat: string): void =>
+  useLLMStore.setState(() => ({ selectedFormat }));
+
+export const setSelectedFormatDescription = (selectedFormatDescription: string): void =>
+  useLLMStore.setState(() => ({ selectedFormatDescription }));
 
 const useLLMStoreBase = create<LLMStoreProps>()(() => ({
   ...initialState,

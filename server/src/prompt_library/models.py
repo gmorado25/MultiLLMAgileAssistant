@@ -31,3 +31,10 @@ class Prompt(models.Model):
 
     def __str__(self):
         return self.title.__str__()
+    
+class Format(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.title.__str__()

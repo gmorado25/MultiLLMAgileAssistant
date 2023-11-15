@@ -1,24 +1,17 @@
 "use client";
 import axios from "axios";
-import { setPrompts, getCookie } from "../store/LLM-store";
+import { setPrompts } from "../store/LLM-store";
 import { useEffect } from "react";
+import { getJSONHeader } from "@/app/utils/cookies";
 
 // Custom hook with useEffect
 const useGetPrompts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const csrftoken = getCookie("csrftoken");
-        const config = {
-          headers: {
-            "content-type": "application/json",
-            "X-CSRFToken": csrftoken,
-          },
-        };
+        const config = getJSONHeader()
         const response = await axios.get("/prompts.json", config);
-        const data = response.data;
-
-        setPrompts(data);
+        setPrompts(response.data);
       } catch (err) {
         console.log(err);
       }

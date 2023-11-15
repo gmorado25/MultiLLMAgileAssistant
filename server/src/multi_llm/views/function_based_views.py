@@ -4,5 +4,5 @@ from rest_framework.request import Request
 from multi_llm.util import llm_manager
 
 @api_view(['GET'])
-def models(request: Request) -> Response:
+def models(request: Request, format=None) -> Response:
     return Response(llm_manager.getModels())
