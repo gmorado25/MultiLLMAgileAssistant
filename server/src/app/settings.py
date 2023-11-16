@@ -97,7 +97,7 @@ DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 # else: 
 #     auth_config = CONFIG_DIR / 'keys-prod.json'
 
-with open('keys-dev.json') as auth:
+with open(CONFIG_DIR / 'keys-dev.json') as auth:
     entry: dict[str, str]
     auth_keys = json.load(auth)
     for entry in auth_keys['llm_auth_keys']:
