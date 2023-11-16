@@ -92,12 +92,12 @@ USE_TZ = True
 
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-if (DEBUG is True):
-    auth_config = CONFIG_DIR / 'keys-dev.json' 
-else: 
-    auth_config = CONFIG_DIR / 'keys-prod.json'
+# if (DEBUG is True):
+#     auth_config = CONFIG_DIR / 'keys-dev.json' 
+# else: 
+#     auth_config = CONFIG_DIR / 'keys-prod.json'
 
-with open(auth_config) as auth:
+with open('keys-dev.json') as auth:
     entry: dict[str, str]
     auth_keys = json.load(auth)
     for entry in auth_keys['llm_auth_keys']:
