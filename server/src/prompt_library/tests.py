@@ -84,7 +84,9 @@ class TestPromptLibViews(TestCase):
         Test that /prompts returns a list of prompts in the 
         database in JSON format.
         """
-        pass
+        url = reverse('prompts')
+        response = self.client.get(url)
+        assert response.status_code == status.HTTP_200_OK
 
     def test_prompt_id_view(self):
         """
