@@ -88,12 +88,30 @@ class TestPromptLibViews(TestCase):
         response = self.client.get(url)
         assert response.status_code == status.HTTP_200_OK
 
+
     def test_prompt_id_view(self):
-        """
-        Test that /prompts/<id> returns the requested prompt
-        from the database in JSON format.
-        """
-        pass
+    #Test that /prompts/<id> returns the requested prompt
+    #from the database in JSON format. """
+    # Add a prompt to the database
+        prompt = Prompt.objects.create(
+            title="Test Prompt", 
+            description="Test description", 
+            sdlc_phase="testing", 
+            role="tester"
+        )
+
+        url = reverse('prompt_id', kwargs={'id': prompt.id})
+
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.json()
+
+        self.assertEqual(data['id'], prompt.id)
+        self.assertEqual(data['title'], prompt.title)
+        self.assertEqual(data['description'], prompt.description)
+        self.assertEqual(data['sdlc_phase'], prompt.sdlc_phase)
+        self.assertEqual(data['role'], prompt.role)
 
     def test_prompt_search_view(self):
         """
