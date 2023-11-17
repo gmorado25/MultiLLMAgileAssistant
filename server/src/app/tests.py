@@ -26,7 +26,7 @@ class TestAppViews(TestCase):
         homepage = "127.0.0.1:3000/"
         self.client.get(homepage)      
 
-        sync_url = reverse('homepage') #should map to <host>:<port> that Django is running on
+        sync_url = reverse('homepage') #should map to <host>:<port> that NextJS is running on
         response = self.client.get(sync_url)
         assert response.status_code == status.HTTP_200_OK
 
@@ -35,7 +35,7 @@ class TestAppViews(TestCase):
         assert response.status_code == status.HTTP_200_OK
 
     def test_adminPanel_url_reachable(self):
-        url = reverse('admin')
+        url = reverse('admin:index')
         response = self.client.get(url)
-        assert response.status_code == status.HTTP_200_OK
+        assert response.status_code < 400 # will likely redirect, but this is ok since we're just checking reachability
     

@@ -26,6 +26,7 @@ const JiraSearchBar: FC = () => {
                 placeholder="Search" 
             />
             </form>
+            <h2>NOT YET IMPLEMENTED</h2>
         </div>
     );
 };

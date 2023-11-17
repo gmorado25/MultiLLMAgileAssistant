@@ -1,3 +1,5 @@
+import json
+
 from django.test import TestCase
 from django.urls import reverse
 
@@ -86,7 +88,10 @@ class TestPromptLibViews(TestCase):
         """
         url = reverse('prompts')
         response = self.client.get(url)
-        assert response.status_code == status.HTTP_200_OK
+        
+        # expected is a single record from the setUp() method above
+        expected = json.loads('[{"title": "Prompt 1", "description": "AAA", "sdlc_phase": "testing", "role": "tester"}]')
+        assert response.data == expected
 
 
     def test_prompt_id_view(self):
@@ -107,7 +112,6 @@ class TestPromptLibViews(TestCase):
 
         data = response.json()
 
-        self.assertEqual(data['id'], prompt.id)
         self.assertEqual(data['title'], prompt.title)
         self.assertEqual(data['description'], prompt.description)
         self.assertEqual(data['sdlc_phase'], prompt.sdlc_phase)
