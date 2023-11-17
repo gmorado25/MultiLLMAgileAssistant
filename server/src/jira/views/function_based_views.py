@@ -18,9 +18,6 @@ keys_dev_path = project_root / 'config' / 'keys-dev.json'
 with open(keys_dev_path, 'r') as json_file:
     keys_data = json.load(json_file)
 
-# Extracting the Jira token from the keys_data
-jira_token = keys_data.get('jira_tokens', [{}])[0].get('token', '')
-
 @api_view(['POST'])
 def getResource(request: Request) -> Response:
     global jira_token
