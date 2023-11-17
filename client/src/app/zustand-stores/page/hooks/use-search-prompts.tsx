@@ -23,8 +23,8 @@ const useSearchPrompts = () => {
 
     const fetchData = () => {
       const config = getJSONHeader();
-      axios.get(`prompts/search/?${queryString}`, config).then(r => {
-        setPrompts(r.data)
+      axios.get(`/prompts/search/?${queryString}`, config).then(r => {
+        setPrompts(r.data.prompts)
       }).catch(e => {
         console.log(e);
       })

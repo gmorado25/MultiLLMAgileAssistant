@@ -20,7 +20,7 @@ with open(keys_dev_path, 'r') as json_file:
 
 @api_view(['POST'])
 def getResource(request: Request) -> Response:
-    global jira_token
+    jira_token = ""
     request_url = request.data.get('url')
     request_headers = request.data.get('header')
     request_email = request.data.get('email')
