@@ -51,6 +51,34 @@ class TestMultiLLMViews(TestCase):
         response = self.client.delete(url)
         assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
+    def test_formats_url_reachable_onGET(self):
+        url = reverse('formats')
+        response = self.client.get(url)
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_formats_url_not_reachable_on_POST_PUT_DELETE(self):
+        url = reverse('formats')
+        response = self.client.post(url)
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        response = self.client.put(url)
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        response = self.client.delete(url)
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED    
+
+    def test_format_search_url_reachable_onGET(self):
+        url = reverse('format_search') + "?format=CSV_FORMAT"
+        response = self.client.get(url)
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_format_search_url_not_reachable_on_POST_PUT_DELETE(self):
+        url = reverse('format_search')
+        response = self.client.post(url)
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        response = self.client.put(url)
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
+        response = self.client.delete(url)
+        assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED    
+
     # ----- TEST VIEW FUNCTIONAILITY ITSELF -----
 
     def test_models_view(self):
