@@ -123,7 +123,22 @@ class TestPromptLibViews(TestCase):
         the given query parameters. For example .../prompts/search?role=req
         should return all prompts where 'req' appears in the 'role' attribute
         """
-        pass
+        prompt1 = Prompt.objects.create(title="Prompt 1", description="AAA", sdlc_phase="testing", role="tester")
+        prompt2 = Prompt.objects.create(title="Prompt 2", description="BBB", sdlc_phase="development", role="developer")
+        prompt3 = Prompt.objects.create(title="Prompt 3", description="CCC", sdlc_phase="testing", role="req_role")
 
-    # WRITE OTHER NEGATIVE TEST CASES FOR VIEWS
+        search_params = {'role': 'req'}
+
+        url = reverse('prompt_search') + '?' + '&'.join([f'{key}={value}' for key, value in search_params.items()])
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.json()
+
+        self.assertGreaterEqual(len(data), 1)
+
+
+# WRITE OTHER NEGATIVE TEST CASES FOR VIEWS
 
