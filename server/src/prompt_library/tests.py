@@ -129,6 +129,7 @@ class TestPromptLibViews(TestCase):
 
         search_params = {'role': 'req'}
 
+        # search for '/prompts/search?role=req'
         url = reverse('prompt_search') + '?' + '&'.join([f'{key}={value}' for key, value in search_params.items()])
 
         response = self.client.get(url)
@@ -136,8 +137,10 @@ class TestPromptLibViews(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         data = response.json()
+        expected = json.loads('{"prompts": [{"title": "Prompt 3", "description": "CCC", "sdlc_phase": "testing", "role": "req_role"}]}')
+        self.assertEqual(len(data), len(expected))
 
-        self.assertGreaterEqual(len(data), 1)
+        assert expected == data
 
 
 # WRITE OTHER NEGATIVE TEST CASES FOR VIEWS
