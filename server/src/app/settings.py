@@ -16,6 +16,7 @@ from pathlib import Path
 #
 # =============================================================================
 
+# Does nothing - Not Yet Implemented
 HOST_ADDRESS = os.getenv('ADDRESS', '127.0.0.1')
 HOST_PORT = os.getenv('PORT', '8000')    
 
@@ -92,12 +93,8 @@ USE_TZ = True
 
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-# if (DEBUG is True):
-#     auth_config = CONFIG_DIR / 'keys-dev.json' 
-# else: 
-#     auth_config = CONFIG_DIR / 'keys-prod.json'
-
-with open(CONFIG_DIR / 'keys-dev.json') as auth:
+key_path = os.getenv('AUTH_KEYS_FILE', 'keys-dev.json')
+with open(CONFIG_DIR / key_path) as auth:
     entry: dict[str, str]
     auth_keys = json.load(auth)
     for entry in auth_keys['llm_auth_keys']:
