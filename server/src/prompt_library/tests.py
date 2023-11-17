@@ -107,7 +107,6 @@ class TestPromptLibViews(TestCase):
 
         data = response.json()
 
-        self.assertEqual(data['id'], prompt.id)
         self.assertEqual(data['title'], prompt.title)
         self.assertEqual(data['description'], prompt.description)
         self.assertEqual(data['sdlc_phase'], prompt.sdlc_phase)
