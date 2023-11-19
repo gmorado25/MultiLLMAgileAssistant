@@ -4,11 +4,10 @@ from pathlib import Path
 from django.apps import AppConfig
 from multi_llm.util import llm_manager
 from multi_llm.models.abstract_endpoint import AbstractEndpoint
-
+from app.settings import MODELS_CONFIG
 class AppConfig(AppConfig):
 
     name = 'multi_llm'
-    models_config = 'config/models.json'
     
     def __registerModel(self, model: dict[str, Any]) -> None:
         id = model['id']
@@ -46,6 +45,4 @@ class AppConfig(AppConfig):
         """
         Called once the application is loaded to perform startup tasks.
         """
-        root_dir = Path(__file__).resolve().parent.parent.parent
-        path = root_dir.joinpath(self.models_config)
-        self.__registerModelsFromConfig(str(path))
+        self.__registerModelsFromConfig(MODELS_CONFIG)

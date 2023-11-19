@@ -1,5 +1,6 @@
 #! /bin/bash
 
+cd "$1"
 VIRTUAL_ENV=".project_env"
 
 echo [*] Setting up Server project...
@@ -16,6 +17,7 @@ if [ ! -f "${VIRTUAL_ENV}/bin/activate" ]; then
     if [ ! -f "${VIRTUAL_ENV}/bin/activate" ]; then
         echo [-] An issue with environment setup occurred.
         echo [-] Unable to setup Virtual Environment.
+        read -n1 -r -p "Press any key to continue..." key
         exit 1
     fi
 
@@ -30,6 +32,7 @@ source ${VIRTUAL_ENV}/bin/activate
 if [ $? -ne 0 ]; then
     echo [-] An issue activating environment has occurred.
     echo [-] Unable to finish setup.
+    read -n1 -r -p "Press any key to continue..." key
     exit 1
 fi
 
@@ -40,6 +43,7 @@ pip install -r config/requirements.txt
 if [ $? -ne 0 ]; then
     echo [-] An issue installing server packages has occurred.
     echo [-] Unable to finish setup.
+    read -n1 -r -p "Press any key to continue..." key
     exit 1
 fi
 
@@ -57,9 +61,11 @@ npm install
 if [ $? -ne 0 ]; then
     echo [-] An issue installing client packages has occurred.
     echo [-] Unable to finish setup.
+    read -n1 -r -p "Press any key to continue..." key
     exit 1
 fi
 
 echo [+] Packages Installed successfully.
 echo [+] Client files installed.
 
+read -n1 -r -p "Press any key to continue..." key

@@ -1,10 +1,8 @@
-cd server
-Call .project_env/Scripts/activate
-cd src
-
-Set "DEBUG=%1"
-Set "AUTH_KEYS_FILE=%2"
+cd "%1"
+Call server/.project_env/Scripts/activate
+cd server/src
 
 python manage.py makemigrations prompt_library
 python manage.py migrate
-python manage.py runserver
+python manage.py runserver %SERVER_ADDRESS%:%SERVER_PORT%
+pause
