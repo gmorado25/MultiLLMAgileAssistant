@@ -45,7 +45,7 @@ node --version
 ```
 
 Remaining frontend dependencies are installed with the setup script discussed
-in the Environment Setup [section](#environment-setup)
+in the Environment Setup [section](#environment-setup).
 
 ## Acquire API Keys
 
@@ -59,7 +59,7 @@ an account and an API key. The company has an open source API that can be querie
 over the internet and requires authorization by using this key. Users can sign up for either
 a full time paid account or a limited time free trial on OpenAI's [website](https://platform.openai.com/docs/quickstart?context=python).
 Follow the documentation there to set up an account and generate your own API key.
-Once in hand, follow the [configuration section](#-setup-configuration-files) to
+Once in hand, follow the [configuration section](#setup-configuration-files) to
 make sure this key authorizes your interactions with OpenAI's models.
 
 ### Google keys
@@ -68,7 +68,7 @@ In order to use Google's VertexAI models (which powers services like Google Bard
 users must acquire a Google Cloud project key to authorize their interactions
 with google services. Follow this (guide)[https://www.youtube.com/watch?v=Zi-W2pPVmzU] to setup 
 your own google cloud account and enable VertexAI and generate an API key. 
-Once in hand, follow the [configuration section](#-setup-configuration-files) to make sure 
+Once in hand, follow the [configuration section](#setup-configuration-files) to make sure 
 this key authorizes your interactions with Google's models.
 
 *Note* - There are multiple routes to obtaining an API key for Google's models,
@@ -180,7 +180,7 @@ for further installation support.
 Development setup is streamlined with the help of several shell scripts and a
 project command line tool. Anyone starting with a new clone of the project can
 either use the command line tool to automatically setup their project or
-follow the manual steps discussed [here](#setup-project-manually)
+follow the manual steps discussed [here](#manual-setup).
 
 ### Automatic Setup
 
@@ -408,7 +408,7 @@ feature for a future release.
 
 The django admin is required to add prompts and formats to the multi-llm database.
 To set this up, first activate your python virtual environment using the command
-described in [setup](#-Manual-Setup). Navigate to the Django project root:
+described in [setup](#Manual-Setup). Navigate to the Django project root:
 ```
 cd server/src
 ```
@@ -532,7 +532,7 @@ SERVER_DEBUG=<boolean to run django in debug or not>
 Be sure to use the correct sytax for your terminal and that these
 values are exported to running processes. Now activate your virtual
 environment for the project if it is not already active. Do this with
-the command specified in [setup](#-Manual-Setup). Next, navigate to the django 
+the command specified in [setup](#Manual-Setup). Next, navigate to the django 
 project root:
 ```
 cd server/src
