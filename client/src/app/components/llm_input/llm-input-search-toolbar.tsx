@@ -38,7 +38,6 @@ const initialInputSearchFormValues: InputSearchFormSchema = {
 };
 
 const LLMSearchToolbar: FC = () => {
-
   const generate = useGenerate();
 
   const GENERATE_REQUEST_FORM_SCHEMA = yup.object().shape({
@@ -58,7 +57,7 @@ const LLMSearchToolbar: FC = () => {
   const handleSubmit = async () => {
     (await generate)();
   };
-  
+
   return (
     <div className="w-full p-4">
       <form className="flex flex-col w-full pr-8 space-y-4 border-Primary rounded-lg xl:pr-0 py-4 ">
@@ -67,7 +66,7 @@ const LLMSearchToolbar: FC = () => {
           <div className="flex flex-row">
             <PromptModal />
             <AsyncSelector
-              url="/formats.json" 
+              url="/formats.json"
               placeholder="Select Format"
               callback={(value) => {
                 setSelectedFormat(value);
@@ -77,10 +76,10 @@ const LLMSearchToolbar: FC = () => {
               name="models"
               control={control}
               render={({ field }) => (
-                <FormControl>
+                <FormControl data-testid="selector">
                   <AsyncSelector
                     value={field.value}
-                    url="/models.json" 
+                    url="/models.json"
                     placeholder="Select one or more LLMs"
                     required
                     callback={(selected) => {
@@ -106,7 +105,10 @@ const LLMSearchToolbar: FC = () => {
               <JiraConnect />
             </div>
           </div>
-          <OptionDisplay heading="Prompt" hook={() => useLLMStore.use.selectedPrompt().description} />
+          <OptionDisplay
+            heading="Prompt"
+            hook={() => useLLMStore.use.selectedPrompt().description}
+          />
           <OptionDisplay heading="Modify the output" hook={useFormat} />
           <Divider></Divider>
           <h4>Enter your data:</h4>
@@ -120,12 +122,18 @@ const LLMSearchToolbar: FC = () => {
           ></Textarea>
           <div className="flex items-end justify-end py-4">
             <div className="px-4">
-              <Button className="" disabled={false} variant="outlined" data-testid="input-search_clear-button">
+              <Button
+                className=""
+                disabled={false}
+                variant="outlined"
+                data-testid="input-search_clear-button"
+              >
                 Clear
               </Button>
             </div>
             <Button
               // eslint-disable-next-line react-hooks/rules-of-hooks
+
               onClick={handleSubmit}
               className=""
               disabled={useLLMStore.use.isGeneratedLoading()}

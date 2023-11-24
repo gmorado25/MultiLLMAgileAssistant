@@ -28,6 +28,7 @@ const PromptBlock: React.FC<
   return (
     <div className="PromptBlock">
       <Card
+        data-testid={title}
         sx={{
           width: 300,
           height: 120,
