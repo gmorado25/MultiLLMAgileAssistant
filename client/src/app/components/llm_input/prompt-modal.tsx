@@ -35,6 +35,7 @@ export default function LayoutModalDialog() {
       <Stack direction="row" spacing={1}>
         <div className="flex  ml-4 mr-4">
           <Button
+            data-testid="promptModal"
             variant="solid"
             color="primary"
             onClick={() => {
@@ -68,6 +69,7 @@ export default function LayoutModalDialog() {
             <Divider />
             <div className="flex justify-end">
               <Button
+                data-testid="save"
                 onClick={() => {
                   if (selectedPromptTitle) {
                     const selectedPrompt = promptData.find(
