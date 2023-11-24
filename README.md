@@ -229,9 +229,9 @@ python3 -m venv .project_env
 </details><br>
 
 This creates a local environment directory named '.project_env' inside the server
-folder in the project. Next, to install dependencies to that envirnment, rather 
+folder in the project. Next, to install dependencies to that environment, rather 
 than globally, users must activate the virtual environment. This is achieved by running
-the activation script created when the envirnment was set up:
+the activation script created when the environment was set up:
 
 <details>
 <summary>Windows Powershell</summary>
@@ -404,6 +404,33 @@ will fail to load.<br>
 *Note* - The Jira tokens are currently unused, as Jira integration is a planned
 feature for a future release.
 
+## Setup Django admin panel
+
+The django admin is required to add prompts and formats to the multi-llm database.
+To set this up, first activate your python virtual environment using the command
+described in [setup](#-Manual-Setup). Navigate to the Django project root:
+```
+cd server/src
+```
+And run the command:
+
+<details>
+<Summary>Windows</Summary>
+
+```
+python manage.py createsuperuser
+```
+</details><details>
+<Summary>Linux/MAC</Summary>
+
+```
+python3 manage.py createsuperuser
+```
+</details>
+
+Follow the instructions and this will create a database user and enable 
+you to login to the admin panel.
+
 ## Starting the Server
 
 Running the project code requires 2 steps, starting the back end server, which
@@ -503,7 +530,9 @@ SERVER_DEBUG=<boolean to run django in debug or not>
 ```
 
 Be sure to use the correct sytax for your terminal and that these
-values are exported to running processes. Next, navigate to the django 
+values are exported to running processes. Now activate your virtual
+environment for the project if it is not already active. Do this with
+the command specified in [setup](#-Manual-Setup). Next, navigate to the django 
 project root:
 ```
 cd server/src
