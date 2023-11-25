@@ -97,7 +97,20 @@ const PromptSearchToolbar: FC = () => {
           placeholder="Search"
           {...register("searchInput")}
         />
-        <Button type="submit" data-testid="prompt_search_submit-button">Search</Button>
+        <Button 
+          type="submit" 
+          data-testid="prompt_search_submit-button"
+          sx={{mr: 2}}
+        >
+          Search
+        </Button>
+        <Button 
+          onClick={() => {
+            setPromptSearch({role: "", phase: "", searchInput: " "})
+          }}
+        >
+          Reset
+        </Button>
       </div>
     </form>
   );
