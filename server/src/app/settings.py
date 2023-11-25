@@ -16,12 +16,19 @@ from pathlib import Path
 #
 # =============================================================================
 
-HOST_ADDRESS = os.getenv('ADDRESS', '127.0.0.1')
-HOST_PORT = os.getenv('PORT', '8000')    
+# Does nothing - Not Yet Implemented
+DJANGO_HOST_ADDRESS = os.getenv('SERVER_ADDRESS', '127.0.0.1')
+DJANGO_HOST_PORT = os.getenv('SERVER_PORT', '8000')    
+NEXTJS_HOST_ADDRESS = os.getenv('NEXTJS_ADDRESS', 'localhost')
+NEXT_JS_PORT = os.getenv('NEXTJS_PORT', '3000') 
 
 # Build paths inside project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 CONFIG_DIR = BASE_DIR / 'server/config'
+
+AUTH_KEYS = os.getenv('AUTH_KEYS_FILE', (CONFIG_DIR / 'keys-dev.json').resolve().__str__()).strip("\"")
+
+MODELS_CONFIG = os.getenv('LLM_MODELS_FILE', (CONFIG_DIR / 'models.json').resolve().__str__())
 
 ROOT_URLCONF = 'app.urls'                      # module that contains root project url mapping
 WSGI_APPLICATION = 'app.wsgi.application'      # module that contains application deployment code
@@ -90,14 +97,9 @@ USE_TZ = True
 #   configurations.
 # =============================================================================
 
-DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
+DEBUG = os.getenv('SERVER_DEBUG', 'False').lower() == 'true'
 
-# if (DEBUG is True):
-#     auth_config = CONFIG_DIR / 'keys-dev.json' 
-# else: 
-#     auth_config = CONFIG_DIR / 'keys-prod.json'
-
-with open(CONFIG_DIR / 'keys-dev.json') as auth:
+with open(AUTH_KEYS) as auth:
     entry: dict[str, str]
     auth_keys = json.load(auth)
     for entry in auth_keys['llm_auth_keys']:
@@ -106,12 +108,12 @@ with open(CONFIG_DIR / 'keys-dev.json') as auth:
 
     SECRET_KEY = os.environ['MULTI_LLM_SECRET_KEY']
 
-ALLOWED_HOSTS = [HOST_ADDRESS]
+ALLOWED_HOSTS = [DJANGO_HOST_ADDRESS]
 
 # CORS Settings - see https://pypi.org/project/django-cors-headers/
 CORS_ORIGIN_ALLOW_ALL = False                                   
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:3000']
+CORS_ALLOWED_ORIGINS = ['http://' + NEXTJS_HOST_ADDRESS + ':' + NEXT_JS_PORT]
 
 # =============================================================================
 #   Miscellaneous django settings

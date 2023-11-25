@@ -1,5 +1,6 @@
 @echo off
 
+cd "%1"
 Set "VIRTUAL_ENV=.project_env"
 
 echo [*] Setting up Server project...
@@ -16,6 +17,7 @@ If Not Exist "%VIRTUAL_ENV%\Scripts\activate.bat" (
     If Not Exist "%VIRTUAL_ENV%\Scripts\activate.bat" (
         echo [-] An issue with environment setup occurred.
         echo [-] Unable to setup Virtual Environment.
+        pause
         Exit /B 1
     )
 
@@ -30,6 +32,7 @@ Call "%VIRTUAL_ENV%\Scripts\activate.bat"
 if %ERRORLEVEL% NEQ 0 (
     echo [-] An issue activating environment has occurred.
     echo [-] Unable to finish setup.
+    pause
     Exit /B 1
 )
 
@@ -40,6 +43,7 @@ Call pip install -r config/requirements.txt
 if %ERRORLEVEL% NEQ 0 (
     echo [-] An issue installing server packages has occurred.
     echo [-] Unable to finish setup.
+    pause
     Exit /B 1
 )
 
@@ -57,8 +61,10 @@ Call npm install
 if %ERRORLEVEL% NEQ 0 (
     echo [-] An issue installing client packages has occurred.
     echo [-] Unable to finish setup.
+    pause
     Exit /B 1
 )
 
 echo [+] Packages Installed successfully.
 echo [+] Client files installed.
+pause
