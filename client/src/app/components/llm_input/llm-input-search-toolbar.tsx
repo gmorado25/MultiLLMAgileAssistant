@@ -114,7 +114,8 @@ const LLMSearchToolbar: FC = () => {
           <h4>Enter your data:</h4>
           <Textarea
             value={useLLMStore.use.inputData()}
-            className="overflow-auto h-60"
+            className="h-60"
+            maxRows={15}
             placeholder="Input text here..."
             onChange={(value) => {
               setInputData(value.target.value);
