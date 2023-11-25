@@ -113,6 +113,7 @@ const LLMSearchToolbar: FC = () => {
           <Divider></Divider>
           <h4>Enter your data:</h4>
           <Textarea
+            value={useLLMStore.use.inputData()}
             className="overflow-auto h-60"
             placeholder="Input text here..."
             onChange={(value) => {
@@ -127,6 +128,9 @@ const LLMSearchToolbar: FC = () => {
                 disabled={false}
                 variant="outlined"
                 data-testid="input-search_clear-button"
+                onClick={() => {
+                  setInputData("");
+                }}
               >
                 Clear
               </Button>
