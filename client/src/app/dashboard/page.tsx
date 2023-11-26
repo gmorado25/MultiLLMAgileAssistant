@@ -30,7 +30,6 @@ const multiLLM: NextPage = () => {
             <Image
               src="http://localhost:3000/argo.svg"
               alt="argo logo"
-              className="dark:invert"
               width={80}
               height={24}
               priority
