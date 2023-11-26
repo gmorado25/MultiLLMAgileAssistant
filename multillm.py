@@ -197,7 +197,7 @@ def runSetup() -> None:
             creationflags=subprocess.CREATE_NEW_CONSOLE,
         )
     else:
-        subprocess.Popen([setup, __base_dir], executable="/bin/bash")
+        subprocess.Popen(['bash', setup, __base_dir], executable="/bin/bash")
 
 def runServerTest() -> None:
     test_server = __scripts_dir + 'test_server' + __script_extension
@@ -207,7 +207,7 @@ def runServerTest() -> None:
             creationflags=subprocess.CREATE_NEW_CONSOLE,
         )
     else:
-        subprocess.Popen([test_server, __base_dir], executable="/bin/bash")
+        subprocess.Popen(['bash', test_server, __base_dir], executable="/bin/bash")
 
 def runUITest() -> None:
     test_ui = __scripts_dir + 'test_ui' + __script_extension
@@ -217,7 +217,7 @@ def runUITest() -> None:
             creationflags=subprocess.CREATE_NEW_CONSOLE,
         )
     else:
-        subprocess.Popen([test_ui, __base_dir], executable="/bin/bash")
+        subprocess.Popen(['bash', test_ui, __base_dir], executable="/bin/bash")
 
 def startServer() -> None:
 
@@ -235,7 +235,7 @@ def startServer() -> None:
             creationflags=subprocess.CREATE_NEW_CONSOLE,
         )
     else:
-        subprocess.Popen([server, __base_dir], executable="/bin/bash")
+        subprocess.Popen(['bash', server, __base_dir], executable="/bin/bash")
 
 def startUI() -> None:
     print('[*] Starting NextJS.')
@@ -250,7 +250,7 @@ def startUI() -> None:
             creationflags=subprocess.CREATE_NEW_CONSOLE,
         )
     else:
-        subprocess.Popen([nextjs, __base_dir], executable="/bin/bash")
+        subprocess.Popen(['bash', nextjs, __base_dir], executable="/bin/bash")
 
 def main(argv: list[str]) -> int:
 
