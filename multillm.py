@@ -5,11 +5,9 @@ from pathlib import Path
 __base_dir = Path(__file__).parent.resolve()
 
 if (platform.system() == "Windows"):
-    __shell = ''
     __script_extension = '.bat'
     __scripts_dir = (__base_dir / 'scripts/windows/').resolve().__str__() + '\\'
 else:
-    __shell = 'bash'
     __script_extension = '.sh'
     __scripts_dir = (__base_dir / 'scripts/linux_mac/').resolve().__str__() + '/'
 
@@ -192,25 +190,34 @@ def setEnvironmentVariables(
     os.environ['NEXTJS_PORT'] = str(clientArgs.port)
 
 def runSetup() -> None:
-    setup = __shell + ' ' + __scripts_dir + 'setup' + __script_extension
-    subprocess.Popen(
-        [setup.strip(), __base_dir],
-        creationflags=subprocess.CREATE_NEW_CONSOLE,
-    )
+    setup = __scripts_dir + 'setup' + __script_extension
+    if (platform.system() == "Windows"):
+        subprocess.Popen(
+            [setup, __base_dir],
+            creationflags=subprocess.CREATE_NEW_CONSOLE,
+        )
+    else:
+        subprocess.Popen([setup, __base_dir], executable="/bin/bash")
 
 def runServerTest() -> None:
-    test_server = __shell + ' ' + __scripts_dir + 'test_server' + __script_extension
-    subprocess.Popen(
-        [test_server.strip(), __base_dir],
-        creationflags=subprocess.CREATE_NEW_CONSOLE,
-    )
+    test_server = __scripts_dir + 'test_server' + __script_extension
+    if (platform.system() == "Windows"):
+        subprocess.Popen(
+            [test_server, __base_dir],
+            creationflags=subprocess.CREATE_NEW_CONSOLE,
+        )
+    else:
+        subprocess.Popen([test_server, __base_dir], executable="/bin/bash")
 
 def runUITest() -> None:
-    test_ui = __shell + ' ' + __scripts_dir + 'test_ui' + __script_extension
-    subprocess.Popen(
-        [test_ui.strip(), __base_dir],
-        creationflags=subprocess.CREATE_NEW_CONSOLE,
-    )
+    test_ui = __scripts_dir + 'test_ui' + __script_extension
+    if (platform.system() == "Windows"):
+        subprocess.Popen(
+            [test_ui, __base_dir],
+            creationflags=subprocess.CREATE_NEW_CONSOLE,
+        )
+    else:
+        subprocess.Popen([test_ui, __base_dir], executable="/bin/bash")
 
 def startServer() -> None:
 
@@ -221,11 +228,14 @@ def startServer() -> None:
     print(f'   \__ LLM config: "{os.getenv("MODELS_CONFIG")}"')
     print(f'   \__ Authentication Keys: "{os.getenv("AUTH_KEYS_FILE")}"\n')
 
-    server = __shell + ' ' + __scripts_dir + 'server' + __script_extension
-    subprocess.Popen(
-        [server.strip(), __base_dir],
-        creationflags=subprocess.CREATE_NEW_CONSOLE,
-    )
+    server = __scripts_dir + 'server' + __script_extension
+    if (platform.system() == "Windows"):
+        subprocess.Popen(
+            [server, __base_dir],
+            creationflags=subprocess.CREATE_NEW_CONSOLE,
+        )
+    else:
+        subprocess.Popen([server, __base_dir], executable="/bin/bash")
 
 def startUI() -> None:
     print('[*] Starting NextJS.')
@@ -233,11 +243,14 @@ def startUI() -> None:
     print(f'   \__ Port number: {os.getenv("NEXTJS_PORT")}')
     print(f'   \__ Debug = {os.getenv("NEXTJS_DEBUG")}')
 
-    nextjs = __shell + ' ' + __scripts_dir + 'nextjs' + __script_extension
-    subprocess.Popen(
-        [nextjs.strip(), __base_dir],
-        creationflags=subprocess.CREATE_NEW_CONSOLE,
-    )
+    nextjs = __scripts_dir + 'nextjs' + __script_extension
+    if (platform.system() == "Windows"):
+        subprocess.Popen(
+            [nextjs, __base_dir],
+            creationflags=subprocess.CREATE_NEW_CONSOLE,
+        )
+    else:
+        subprocess.Popen([nextjs, __base_dir], executable="/bin/bash")
 
 def main(argv: list[str]) -> int:
 

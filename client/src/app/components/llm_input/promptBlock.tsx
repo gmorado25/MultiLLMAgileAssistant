@@ -31,7 +31,7 @@ const PromptBlock: React.FC<
         data-testid={title}
         sx={{
           width: 300,
-          height: 120,
+          height: 170,
           display: "flex", // Ensures the items inside are flex items, which can then be aligned properly
           flexDirection: "column", // Stacks children vertically
           justifyContent: "center", // Centers children along the vertical axis

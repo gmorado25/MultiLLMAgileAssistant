@@ -1,3 +1,5 @@
+#! /bin/bash
+
 cd $1
 source server/.project_env/bin/activate
 cd server/src
