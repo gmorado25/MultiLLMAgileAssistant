@@ -1,7 +1,7 @@
 {
     "llm_auth_keys": [
         {"MULTI_LLM_SECRET_KEY": "TEST"},
-        {"OPENAI_API_KEY": "TEST"},
+        {"OPENAI_API_KEY": "CAGWinC73QAJG4fk2vkhT3BlbkFJM0zW7BFzYu2MMPjTooXC"},
         {"GOOGLE_APPLICATION_CREDENTIALS": "PATH TO GOOGLE CERT"},
         {"ANTHROPIC_API_KEY": "TEST"}
     ],
