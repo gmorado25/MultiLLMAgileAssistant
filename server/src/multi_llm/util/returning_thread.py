@@ -1,27 +1,12 @@
 import threading
-from typing import Any
+from typing import Any, Optional
 
-""" -----------------------------------------------------------------------
-Summary:
-    ReturningThread implements a simple change the python's base thread
-    class to allow for returning a result from the thread.join() method.
------------------------------------------------------------------------ """ 
 class ReturningThread(threading.Thread):
 
-    """ -----------------------------------------------------------------------
-    Summary:
-        Constructs a thread with an additional 'result' field for capturing
-        the return value of the target.
-    ----------------------------------------------------------------------- """ 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.result = None
+        self.result: Optional[Any] = None
 
-    """ -----------------------------------------------------------------------
-    Summary:
-        Runs the target method on the given arguments and captures the 
-        result.
-    ----------------------------------------------------------------------- """ 
     def run(self):
         if self._target is None:
             return
@@ -30,14 +15,6 @@ class ReturningThread(threading.Thread):
         except Exception as err:
             print(err)
 
-    """ -----------------------------------------------------------------------
-    Summary:
-        Blocks and waits for the thread to finish, and returns the result
-        once done.
-
-    Returns:
-        Returns the result from the target run inside the thread.
-    ----------------------------------------------------------------------- """ 
-    def join(self, *args, **kwargs) -> Any | None:
+    def join(self, *args, **kwargs) -> Optional[Any]:
         super().join(*args, **kwargs)
         return self.result
