@@ -70,6 +70,7 @@ const AsyncSelector: FC<SelectorProperties> = ({
       value={value}
       displayEmpty
       className=" ml-4 mr-4"
+      size={'small'}
       onChange={(event) => callback(event.target.value)}
       multiple={multiple}
       placeholder={placeholder}

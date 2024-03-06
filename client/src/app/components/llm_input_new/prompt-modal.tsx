@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import Button from "@mui/joy/Button";
+import Button from "@mui/material/Button";
 import Stack from "@mui/joy/Stack";
 import Modal from "@mui/joy/Modal";
 import ModalClose from "@mui/joy/ModalClose";
@@ -31,21 +31,16 @@ export default function LayoutModalDialog() {
     ModalDialogProps["layout"] | undefined
   >(undefined);
   return (
-    <React.Fragment>
-      <Stack direction="row" spacing={1}>
-        <div className="flex  ml-4 mr-4">
-          <Button
-            data-testid="promptModal"
-            variant="solid"
-            color="primary"
-            onClick={() => {
-              setLayout("fullscreen");
-            }}
-          >
-            Select Prompt
-          </Button>
-        </div>
-      </Stack>
+    <div>
+      <Button
+          data-testid="promptModal"
+          variant="contained"
+          onClick={() => {
+            setLayout("fullscreen");
+          }}
+      >
+        Select Prompt
+      </Button>
       <Modal open={!!layout} onClose={() => setLayout(undefined)}>
         <ModalDialog layout={layout}>
           <ModalClose />
@@ -88,6 +83,6 @@ export default function LayoutModalDialog() {
           </DialogContent>
         </ModalDialog>
       </Modal>
-    </React.Fragment>
+    </div>
   );
 }

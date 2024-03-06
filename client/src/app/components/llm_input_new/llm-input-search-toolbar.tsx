@@ -63,7 +63,7 @@ const LLMSearchToolbar: FC = () => {
       <form className="flex flex-col w-full pr-8 space-y-4 border-Primary rounded-lg xl:pr-0 py-4 ">
         <Divider></Divider>
         <div className="p-4">
-          <div className="flex flex-row">
+          <div className="flex" style={{alignItems: "center"}}>
             <PromptModal />
             <AsyncSelector
               url="/formats.json"
@@ -101,9 +101,7 @@ const LLMSearchToolbar: FC = () => {
                 </FormControl>
               )}
             />
-            <div className="flex justify-end items-end">
-              <JiraConnect />
-            </div>
+            <JiraConnect />
           </div>
           <OptionDisplay
             heading="Prompt"
